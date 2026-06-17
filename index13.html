@@ -1,0 +1,259 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #13 - Monochrome Sandbox</title>
+    <!-- Sharp contrast fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #000000;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Syne', sans-serif;
+            overflow-x: hidden;
+            width: 100vw;
+        }
+
+        ::selection { background: var(--text); color: var(--bg); }
+
+        h1, h2, h3 { font-weight: 800; line-height: 1; text-transform: uppercase; }
+
+        /* 
+          =============================================
+          FIXED UI OVERLAYS
+          =============================================
+        */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 2rem; display: flex; justify-content: space-between; z-index: 100; pointer-events: none; mix-blend-mode: difference; color: #fff;
+        }
+        .logo { font-size: 2rem; font-weight: 800; }
+        .hint { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; text-transform: uppercase; }
+
+        .fixed-title {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: clamp(4rem, 12vw, 15rem); color: var(--text); z-index: 0; pointer-events: none; opacity: 0.05; white-space: nowrap;
+        }
+
+        /* 
+          =============================================
+          SANDBOX CANVAS (Acts as fold 1 & 2)
+          =============================================
+        */
+        .sandbox {
+            min-height: 200vh; /* Extremely tall area to scroll through */
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Draggable / Interactive Blocks */
+        .block {
+            position: absolute;
+            background: var(--bg);
+            border: 2px solid var(--text);
+            padding: 2rem;
+            box-shadow: 10px 10px 0 var(--text);
+            transition: box-shadow 0.2s, transform 0.2s;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .block:hover { box-shadow: 20px 20px 0 var(--text); transform: translate(-10px, -10px); z-index: 50 !important; }
+        .block.dark { background: var(--text); color: var(--bg); box-shadow: 10px 10px 0 #999; border: none;}
+        .block.dark:hover { box-shadow: 20px 20px 0 #999; }
+        
+        .block img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); }
+        .block p { font-family: 'JetBrains Mono', monospace; font-size: 1rem; margin-top: 1rem; line-height: 1.5; }
+        .block h3 { font-size: 3rem; margin-bottom: 1rem;}
+
+        /* Pre-positioned blocks for Folds 1 & 2 */
+        /* Top region */
+        #b1 { top: 15vh; left: 10vw; width: 400px; height: 300px; z-index: 2;}
+        #b2 { top: 30vh; right: 15vw; width: 300px; padding: 0; border: none; box-shadow: 15px 15px 0 var(--text); z-index: 3;}
+        #b3 { top: 60vh; left: 30vw; width: 350px; z-index: 4; }
+
+        /* Middle region */
+        #b4 { top: 120vh; left: 5vw; width: 500px; z-index: 2; border-radius: 50%; height: 500px; align-items:center; text-align:center; padding: 4rem;}
+        #b5 { top: 140vh; right: 10vw; width: 400px; padding: 0; box-shadow: -15px 15px 0 var(--text); z-index: 3;}
+
+        /* 
+          =============================================
+          FOLD 3: STRUCTURED TEXT
+          =============================================
+        */
+        .structured-section {
+            padding: 10vw 5vw; border-top: 4px solid var(--text); border-bottom: 4px solid var(--text); background: var(--bg); display: flex; gap: 5vw; position: relative; z-index: 100;
+        }
+        .s-left { flex: 1; }
+        .s-left h2 { font-size: 8vw; }
+        .s-right { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .s-right p { font-size: 1.5rem; line-height: 1.6; font-family: 'JetBrains Mono'; }
+
+        /* 
+          =============================================
+          FOLD 4: ROTATING EXAMPLES
+          =============================================
+        */
+        .marquee-container { padding: 5vw 0; overflow: hidden; background: var(--text); color: var(--bg); position: relative; z-index: 100;}
+        .marquee { white-space: nowrap; font-size: 10vw; animation: scroll-left 15s linear infinite; }
+        .marquee span { margin-right: 2rem; -webkit-text-stroke: 2px var(--bg); color: transparent;}
+        .marquee span:hover { color: var(--bg); }
+        @keyframes scroll-left { 100% { transform: translateX(-50%); } }
+
+        /* 
+          =============================================
+          FOLD 5: MASSIVE FOOTER
+          =============================================
+        */
+        footer { padding: 10vw 5vw 2vw 5vw; background: var(--bg); position: relative; z-index: 100;}
+        .f-big { font-size: 12vw; text-align: center; border-bottom: 4px solid var(--text); padding-bottom: 2rem; margin-bottom: 2rem; transition: 0.3s;}
+        .f-big:hover { letter-spacing: 2vw; }
+        .f-bot { display: flex; justify-content: space-between; font-family: 'JetBrains Mono'; font-weight: bold; text-transform: uppercase;}
+
+        @media (max-width: 768px) {
+            .block { position: relative !important; top: auto !important; left: auto !important; right: auto !important; width: 100% !important; margin-bottom: 2rem !important; height: auto !important; border-radius: 0 !important;}
+            .sandbox { min-height: auto; padding: 20vh 5vw; }
+            .structured-section { flex-direction: column; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">CHAOS/ORDER</div>
+        <div class="hint">[DRAG ELEMENTS]</div>
+    </nav>
+
+    <div class="fixed-title">PURE MONOCHROME</div>
+
+    <!-- FOLDS 1 & 2: THE SANDBOX -->
+    <div class="sandbox">
+        
+        <div class="block" id="b1">
+            <h3>DISORDER</h3>
+            <p>We embrace the mess. True creativity happens outside the rigid grids of conventional web applications. Our interfaces are sandboxes waiting to be played with.</p>
+        </div>
+
+        <div class="block" id="b2">
+            <img src="file:///C:/Users/Himanshu/.gemini/antigravity/brain/c7bee168-9405-4880-b150-9f22b2890e72/monochrome_sandbox_1775796279528.png" alt="Monochrome Objects">
+        </div>
+
+        <div class="block dark" id="b3">
+            <h3>LOGIC</h3>
+            <p>sys.config.theme = 'monochrome'<br>sys.config.shadows = 'hard'<br>sys.status = 'operational'</p>
+        </div>
+
+        <div class="block dark" id="b4">
+            <h3 style="font-size: 5rem;">ART.</h3>
+            <p style="font-size: 1.5rem;">Is what happens when you let go of control.</p>
+        </div>
+
+        <div class="block" id="b5">
+            <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=800&q=80" alt="Abstract Lines">
+        </div>
+
+    </div>
+
+    <!-- FOLD 3: STRUCTURED -->
+    <div class="structured-section">
+        <div class="s-left">
+            <h2>THE<br>METHOD<br>TO THE<br>MADNESS.</h2>
+        </div>
+        <div class="s-right">
+            <p>
+                Beneath the chaotic, draggable exterior lies a highly optimized foundational layer. Accessible, semantic, and blazingly fast. We don't sacrifice performance for aesthetics; we force them to coexist.
+            </p>
+        </div>
+    </div>
+
+    <!-- FOLD 4: MARQUEE -->
+    <div class="marquee-container">
+        <div class="marquee">
+            <span>DRAG EVERYTHING</span> DRAG EVERYTHING <span>DRAG EVERYTHING</span> DRAG EVERYTHING <span>DRAG EVERYTHING</span> DRAG EVERYTHING
+        </div>
+    </div>
+
+    <!-- FOLD 5: FOOTER -->
+    <footer>
+        <div class="f-big">INTERACT.</div>
+        <div class="f-bot">
+            <span>© 2026 Chaos Studio</span>
+            <span>All black. All white.</span>
+        </div>
+    </footer>
+
+    <!-- Vanilla JS to make blocks draggable -->
+    <script>
+        const blocks = document.querySelectorAll('.block');
+        let activeBlock = null;
+        let isDragging = false;
+        let startX, startY, initialLeft, initialTop;
+        let highestZ = 100;
+
+        blocks.forEach(block => {
+            block.addEventListener('mousedown', dragStart);
+        });
+
+        window.addEventListener('mouseup', dragEnd);
+        window.addEventListener('mousemove', drag);
+
+        // Touch support
+        blocks.forEach(block => {
+            block.addEventListener('touchstart', dragStart, {passive: false});
+        });
+        window.addEventListener('touchend', dragEnd);
+        window.addEventListener('touchmove', drag, {passive: false});
+
+        function dragStart(e) {
+            // Prevent dragging on mobile layout where they are static relative
+            if(window.innerWidth <= 768) return;
+            
+            activeBlock = this;
+            isDragging = true;
+            
+            // Bring to front
+            highestZ++;
+            activeBlock.style.zIndex = highestZ;
+            
+            const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientX;
+
+            startX = clientX;
+            startY = clientY;
+            
+            // Get computed style to find current position
+            const style = window.getComputedStyle(activeBlock);
+            initialLeft = parseFloat(style.left);
+            initialTop = parseFloat(style.top);
+            
+            // Prevent text selection while dragging
+            e.preventDefault();
+        }
+
+        function dragEnd(e) {
+            isDragging = false;
+            activeBlock = null;
+        }
+
+        function drag(e) {
+            if (!isDragging || !activeBlock) return;
+            
+            const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+
+            const dx = clientX - startX;
+            const dy = clientY - startY;
+
+            activeBlock.style.left = `${initialLeft + dx}px`;
+            activeBlock.style.top = `${initialTop + dy}px`;
+        }
+    </script>
+</body>
+</html>

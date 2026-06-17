@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #11 - Retro Swiss Poster</title>
+    <!-- Heavy geometric sans-serif -->
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #f2efe9; /* off-white paper */
+            --red: #df291e;
+            --black: #111111;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--black);
+            font-family: 'Archivo', sans-serif;
+            overflow-x: hidden;
+            /* Mimic subtle paper texture */
+            background-image: url('data:image/svg+xml,%3Csvg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cfilter id=\"noiseFilter\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.8\" numOctaves=\"3\" stitchTiles=\"stitch\"/%3E%3C/filter%3E%3Crect width=\"100%25\" height=\"100%25\" filter=\"url(%23noiseFilter)\" opacity=\"0.05\"/%3E%3C/svg%3E');
+        }
+
+        ::selection { background: var(--black); color: var(--bg); }
+
+        h1, h2, h3 { line-height: 0.9; text-transform: uppercase; font-weight: 900; }
+        p { font-weight: 700; font-size: 1.2rem; }
+
+        .container {
+            width: 100vw;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            border-bottom: 2px solid var(--black);
+        }
+
+        /* 
+          =============================================
+          FOLD 1: POSTER HERO
+          =============================================
+        */
+        .hero { height: 100vh; grid-template-rows: repeat(12, 1fr); border-bottom: 5px solid var(--black);}
+
+        .h-logo {
+            grid-column: 1 / 3; grid-row: 1 / 13;
+            border-right: 2px solid var(--black);
+            display: flex; justify-content: center; align-items: flex-end;
+            padding-bottom: 2rem; position: relative;
+        }
+        .h-logo span {
+            writing-mode: vertical-rl; transform: scale(-1, -1);
+            font-size: 4rem; font-weight: 900; letter-spacing: -2px; text-transform: uppercase;
+        }
+
+        .h-main {
+            grid-column: 3 / 10; grid-row: 1 / 13;
+            padding: 2vw; display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .h-main h1 { font-size: 13vw; letter-spacing: -5px; }
+        .h-main h1 span { color: var(--red); display: block;}
+
+        .h-side {
+            grid-column: 10 / 13; grid-row: 1 / 13;
+            border-left: 2px solid var(--black);
+            background: var(--red); padding: 2vw;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .h-side img {
+            width: 100%; filter: grayscale(100%) contrast(150%);
+            mix-blend-mode: multiply; margin-bottom: 2rem;
+        }
+        .h-side p { color: var(--bg); font-size: 1rem; text-align: justify; }
+
+        /* 
+          =============================================
+          FOLD 2: INFO GRID
+          =============================================
+        */
+        .info-grid {
+            min-height: 100vh;
+        }
+        .i-cell { border-right: 2px solid var(--black); border-bottom: 2px solid var(--black); padding: 4vw; display:flex; flex-direction:column; justify-content:space-between; transition: 0.3s; }
+        .i-cell:hover { background: var(--black); color: var(--bg); }
+        .i-cell:hover .circle { background: var(--bg); }
+        
+        .c-1 { grid-column: span 6; }
+        .c-2 { grid-column: span 6; background: var(--black); color: var(--bg); }
+        .c-3 { grid-column: span 8; }
+        .c-4 { grid-column: span 4; background: var(--red); }
+        
+        .i-cell h2 { font-size: 5vw; margin-bottom: 2rem;}
+        .circle { width: 50px; height: 50px; border-radius: 50%; background: var(--red); margin-bottom: 2rem; transition: 0.3s;}
+
+        /* 
+          =============================================
+          FOLD 3: EXHIBITION BANNER
+          =============================================
+        */
+        .banner { grid-column: span 12; height: 50vh; background: var(--red); color: var(--bg); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .b-text { font-size: 20vw; white-space: nowrap; animation: pan 20s linear infinite; }
+        @keyframes pan { 0% { transform: translateX(50%); } 100% { transform: translateX(-100%); } }
+
+        /* 
+          =============================================
+          FOLD 4 & 5: DETAILS & FOOTER
+          =============================================
+        */
+        .details { grid-column: span 12; display: flex; height: 80vh; }
+        .d-img { flex: 1; border-right: 2px solid var(--black); }
+        .d-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
+        .d-content { flex: 1; padding: 5vw; display: flex; flex-direction: column; justify-content: center; }
+        .d-content h2 { font-size: 6rem; margin-bottom: 2rem;}
+        
+        footer { grid-column: span 12; padding: 2vw; background: var(--black); color: var(--bg); display: flex; justify-content: space-between; font-size: 1.5rem; text-transform: uppercase; font-weight: 700; }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .container { display: flex; flex-direction: column; }
+            .h-logo { display: none; }
+            .h-side { border-left: none; border-top: 2px solid var(--black); }
+            .i-cell { border-right: none; }
+            .d-img { display: none; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- FOLD 1: POSTER HERO -->
+    <div class="container hero">
+        <div class="h-logo">
+            <span>NEUE ZÜRICH</span>
+        </div>
+        <div class="h-main">
+            <div style="font-size: 2rem; border-bottom: 2px solid var(--black); padding-bottom: 1rem; width: 100%;">EXHIBITION . 26</div>
+            <h1>SYSTEMS<br><span>GRID</span></h1>
+        </div>
+        <div class="h-side">
+            <img src="file:///C:/Users/Himanshu/.gemini/antigravity/brain/c7bee168-9405-4880-b150-9f22b2890e72/swiss_poster_1775796249036.png" alt="Swiss Geometric Art">
+            <p>
+                RATIONAL. OBJECTIVE. FUNCTIONAL. WE BELIEVE IN THE PURITY OF THE GRID SYSTEM. DESIGN IS NOT DECORATION; IT IS COMMUNICATION REDUCED TO ITS ABSOLUTE ESSENCE.
+            </p>
+        </div>
+    </div>
+
+    <!-- FOLD 2: INFO GRID -->
+    <div class="container info-grid">
+        <div class="i-cell c-1">
+            <div class="circle"></div>
+            <h2>Objective<br>Clarity</h2>
+        </div>
+        <div class="i-cell c-2">
+            <div class="circle" style="background:var(--red);"></div>
+            <h2>Asymmetric<br>Layouts</h2>
+        </div>
+        <div class="i-cell c-3">
+            <div class="circle" style="background:var(--black);"></div>
+            <h2>Sans-Serif<br>Typographic<br>Dominance.</h2>
+        </div>
+        <div class="i-cell c-4" style="color:var(--bg);">
+            <div class="circle" style="background:var(--black);"></div>
+            <h2 style="font-size:3vw;">International<br>Typographic<br>Style</h2>
+        </div>
+    </div>
+
+    <!-- FOLD 3: BANNER -->
+    <div class="container" style="border:none;">
+        <div class="banner">
+            <div class="b-text">FORM FOLLOWS FUNCTION — FORM FOLLOWS FUNCTION — </div>
+        </div>
+    </div>
+
+    <!-- FOLD 4: LOGIC/DETAILS -->
+    <div class="container">
+        <div class="details">
+            <div class="d-img">
+                <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&q=80&w=1000" alt="Architecture">
+            </div>
+            <div class="d-content">
+                <h2>THE<br>MATH OF<br>DESIGN</h2>
+                <p style="font-size: 1.5rem; max-width: 400px; color: #555; text-align: justify; margin-top:2rem;">
+                    Every element placed on this canvas snaps to an invisible mathematical structure. Nothing is random. Everything is calculated.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOLD 5: FOOTER -->
+    <div class="container" style="border:none;">
+        <footer>
+            <span>1960 - 2026 </span>
+            <span>END OF ARCHIVE</span>
+        </footer>
+    </div>
+
+</body>
+</html>

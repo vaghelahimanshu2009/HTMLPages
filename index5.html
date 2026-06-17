@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #5 - 3D Cosmic Perspective</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #020204;
+            --text: #f0f0f5;
+            --accent: #b39ddb;
+            --glow: rgba(179, 157, 219, 0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            perspective: 1000px;
+            /* Using CSS variable to drive 3D effect linked to scroll */
+            --scroll: 0;
+        }
+
+        /* 
+          =============================================
+          FIXED STARFIELD BACKGROUND
+          =============================================
+        */
+        .starfield {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: radial-gradient(circle at center, #0a0a1a 0%, #000 100%), 
+                        url('file:///C:/Users/Himanshu/.gemini/antigravity/brain/c7bee168-9405-4880-b150-9f22b2890e72/cosmic_depth_1775795670772.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.6;
+            z-index: -2;
+            transform: scale(1.1) translateZ(calc(var(--scroll) * -100px));
+            transition: transform 0.1s linear;
+        }
+
+        /* 
+          =============================================
+          3D SCENE WRAPPER
+          =============================================
+        */
+        .scene {
+            position: relative;
+            transform-style: preserve-3d;
+            z-index: 1;
+            /* The whole timeline */
+            height: 500vh;
+        }
+
+        /* Monolith Panels acting as Folds */
+        .panel {
+            position: fixed;
+            top: 50%; left: 50%;
+            width: 80vw;
+            height: 70vh;
+            transform-origin: center;
+            background: rgba(10, 10, 20, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 5vw;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 30px rgba(179, 157, 219, 0.1);
+            opacity: 0;
+            pointer-events: none; /* Only active when brought to front */
+            /* Z-translation based on scroll */
+            will-change: transform, opacity;
+        }
+
+        /* Specific Fold Transformations */
+        /* JS will update css variables per panel: --z */
+        .panel {
+            transform: translate(-50%, -50%) translateZ(calc(var(--z) * 1px));
+        }
+
+        h1, h2, h3 { font-family: 'Cinzel', serif; letter-spacing: 5px; text-transform: uppercase; }
+
+        .title {
+            font-size: clamp(3rem, 6vw, 6rem);
+            margin-bottom: 2rem;
+            text-shadow: 0 0 30px var(--glow);
+        }
+
+        .subtitle { font-size: 1.2rem; font-weight: 200; max-width: 600px; line-height: 1.8; color: #ccc; }
+
+        /* Fold 2 Specific */
+        .features { display: flex; gap: 3rem; margin-top: 3rem; }
+        .feature-box { flex: 1; border: 1px solid rgba(255,255,255,0.2); padding: 2rem; border-radius: 15px; background: rgba(0,0,0,0.5); }
+        .feature-box h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--accent); }
+
+        /* Fold 4 Specific */
+        .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; width: 100%; margin-top: 2rem; }
+        .metric { font-size: 4rem; font-family: 'Cinzel'; font-weight: 900; }
+        .metric span { display: block; font-size: 1rem; font-family: 'Montserrat'; font-weight: 200; letter-spacing: 2px; }
+
+        /* Navigation overlay */
+        nav { position: fixed; top: 0; width: 100%; padding: 2rem 5vw; display: flex; justify-content: space-between; z-index: 100; mix-blend-mode: difference;}
+        .logo { font-family: 'Cinzel'; font-size: 2rem; font-weight: 700; }
+        .scroll-hint { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); font-size: 0.8rem; letter-spacing: 3px; z-index: 100; opacity: 0.5;}
+
+    </style>
+</head>
+<body>
+
+    <div class="starfield"></div>
+
+    <nav>
+        <div class="logo">ASTRAL</div>
+        <div style="font-size: 0.9rem; font-weight:200; letter-spacing:2px; display:flex; align-items:center;">EXPEDITIONS 26</div>
+    </nav>
+    <div class="scroll-hint">SCROLL TO NAVIGATE SPACE</div>
+
+    <div class="scene">
+        
+        <!-- Fold 1 (Z start: 0) -->
+        <div class="panel" id="p1">
+            <h1 class="title">BEYOND<br>THE HORIZON</h1>
+            <p class="subtitle">Journeys into the deep unknown. Experiencing the vastness of digital space through cutting-edge 3D matrix arrays.</p>
+        </div>
+
+        <!-- Fold 2 (Z start: -2000) -->
+        <div class="panel" id="p2">
+            <h2 class="title" style="font-size: 3rem;">SYSTEM CAPABILITIES</h2>
+            <div class="features">
+                <div class="feature-box"><h3>HYPERDRIVE</h3><p>Instantaneous routing across the grid.</p></div>
+                <div class="feature-box"><h3>DEFLECTORS</h3><p>Impregnable WebGL rendering engine barriers.</p></div>
+                <div class="feature-box"><h3>SENSORS</h3><p>Deep intersection observer logic mapping.</p></div>
+            </div>
+        </div>
+
+        <!-- Fold 3 (Z start: -4000) -->
+        <div class="panel" id="p3">
+            <img src="file:///C:/Users/Himanshu/.gemini/antigravity/brain/c7bee168-9405-4880-b150-9f22b2890e72/cosmic_depth_1775795670772.png" alt="Cosmic" style="width: 100%; height: 50vh; object-fit: cover; border-radius: 20px; filter: grayscale(50%) sepia(30%) hue-rotate(200deg);">
+            <h2 style="position:absolute; top: 50%; transform:translateY(-50%); font-size: 5rem; text-shadow: 0 0 50px #000;">THE NEBULA</h2>
+        </div>
+
+        <!-- Fold 4 (Z start: -6000) -->
+        <div class="panel" id="p4">
+            <h2 class="title" style="font-size: 3rem;">EXPEDITION METRICS</h2>
+            <div class="metrics">
+                <div class="metric">2.4M <span>LIGHTYEARS LOGGED</span></div>
+                <div class="metric">8,930 <span>ENTITIES SCANNED</span></div>
+                <div class="metric">99.9% <span>SYSTEM STABILITY</span></div>
+                <div class="metric">0.02s <span>LATENCY INTERFACE</span></div>
+            </div>
+        </div>
+
+        <!-- Fold 5 (Z start: -8000) -->
+        <div class="panel" id="p5">
+            <h1 class="title">INITIATE</h1>
+            <p class="subtitle" style="margin-bottom: 3rem;">Prepare external docks for connection.</p>
+            <a href="#" style="padding: 1.5rem 4rem; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; font-family: 'Cinzel'; font-size: 1.5rem; letter-spacing: 4px; transition: 0.3s inset box-shadow;">CONNECT</a>
+        </div>
+
+    </div>
+
+    <script>
+        const body = document.body;
+        const panels = Array.from(document.querySelectorAll('.panel'));
+        
+        // Arrange panels in Z-space. 
+        // We will move the "camera" by moving the panels towards the viewer (positive Z)
+        const gap = 2000; 
+
+        // Animation Loop
+        function update3D() {
+            // Get scroll percentage (0 to 1)
+            const scrollY = window.scrollY;
+            const maxScroll = document.body.scrollHeight - window.innerHeight;
+            const scrollNorm = scrollY / maxScroll; // 0 to 1
+            
+            // Set css var for background parallax
+            body.style.setProperty('--scroll', scrollNorm);
+
+            // Calculate camera Z position based on scroll. It goes from 0 to (totalPanels - 1) * gap
+            const cameraZ = scrollNorm * (panels.length - 1) * gap;
+
+            panels.forEach((panel, index) => {
+                const panelStartZ = -(index * gap);
+                // The panel's position relative to the camera
+                const currentZ = panelStartZ + cameraZ;
+                panel.style.setProperty('--z', currentZ);
+
+                // Opacity logic:
+                // If it's too far away (-gap to -2*gap), it's faded out.
+                // If it's at currentZ == 0, it's fully visible.
+                // If it passes the camera (currentZ > 500), it fades out fast.
+                let opacity = 0;
+                let pointer = "none";
+                
+                if (currentZ > -1000 && currentZ <= 300) {
+                    // Fade in as it gets closer
+                    opacity = (currentZ + 1000) / 1000;
+                    if(opacity > 1) opacity = 1;
+                    if(currentZ > -100) pointer = "auto"; // interactive when close
+                } else if (currentZ > 300 && currentZ < 800) {
+                    // Fade out as it passes behind camera
+                    opacity = 1 - ((currentZ - 300) / 500);
+                }
+
+                panel.style.opacity = opacity;
+                panel.style.pointerEvents = pointer;
+            });
+
+            requestAnimationFrame(update3D);
+        }
+
+        update3D();
+    </script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #37 - Typographic Marquee Chaos</title>
+    <!-- Heavy Bold Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #000000;
+            --accent: #ffff00; /* Pure yellow */
+            --offwhite: #f5f5f5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--offwhite);
+            font-family: 'Archivo Black', sans-serif;
+            overflow: hidden; /* No physical scrolling allowed */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+        }
+
+        /* 
+          =============================================
+          MARQUEE ENGINE
+          =============================================
+        */
+        .marquee-wrapper {
+            width: 100vw; overflow: hidden; white-space: nowrap; 
+            display: flex; align-items: center; position: relative;
+        }
+        
+        .marquee-text {
+            font-size: clamp(4rem, 10vw, 8rem); line-height: 0.9; text-transform: uppercase;
+            /* Animation relies on translation */
+            display: inline-block;
+            animation: scroll-left 20s linear infinite;
+        }
+        .marquee-text span { margin-right: 50px; } /* Gap between repeating words */
+
+        /* Outlines vs Solid */
+        .outline { -webkit-text-stroke: 2px var(--offwhite); color: transparent; }
+        .solid { color: var(--offwhite); }
+        .yellow { color: var(--accent); }
+
+        /* Reverse direction */
+        .marquee-wrapper.reverse .marquee-text { animation: scroll-right 15s linear infinite; }
+        
+        /* Varied speeds */
+        .fast { animation-duration: 8s !important; }
+        .slow { animation-duration: 35s !important; }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); } /* Requires the text to be doubled inside the div */
+        }
+        @keyframes scroll-right {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); } 
+        }
+
+        /* 
+          =============================================
+          THE CENTER FOCUS UI
+          =============================================
+        */
+        .center-block {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: var(--accent); color: var(--bg); padding: 2rem 4rem;
+            text-align: center; border: 4px solid var(--bg); box-shadow: 10px 10px 0 var(--offwhite);
+            z-index: 100; mix-blend-mode: normal;
+        }
+        .center-block h2 { font-size: 3rem; margin-bottom: 1rem; letter-spacing: -2px;}
+        .center-block p { font-family: sans-serif; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;}
+
+    </style>
+</head>
+<body>
+
+    <!-- 10 rows of pure text data moving continuously -->
+    
+    <div class="marquee-wrapper">
+        <div class="marquee-text solid slow">
+            <span>LIMITLESS</span><span>LIMITLESS</span><span>LIMITLESS</span><span>LIMITLESS</span><span>LIMITLESS</span><span>LIMITLESS</span>
+        </div>
+    </div>
+
+    <div class="marquee-wrapper reverse">
+        <div class="marquee-text outline">
+            <span>TYPOGRAPHY</span><span>TYPOGRAPHY</span><span>TYPOGRAPHY</span><span>TYPOGRAPHY</span><span>TYPOGRAPHY</span><span>TYPOGRAPHY</span>
+        </div>
+    </div>
+
+    <div class="marquee-wrapper">
+        <div class="marquee-text yellow fast">
+            <span>IS</span><span>IS</span><span>IS</span><span>IS</span><span>IS</span><span>IS</span><span>IS</span><span>IS</span><span>IS</span><span>IS</span><span>IS</span><span>IS</span>
+        </div>
+    </div>
+
+    <div class="marquee-wrapper reverse">
+        <div class="marquee-text solid">
+            <span>THE</span><span>THE</span><span>THE</span><span>THE</span><span>THE</span><span>THE</span><span>THE</span><span>THE</span><span>THE</span><span>THE</span>
+        </div>
+    </div>
+    
+    <div class="marquee-wrapper">
+        <div class="marquee-text outline slow">
+            <span>ENTIRE</span><span>ENTIRE</span><span>ENTIRE</span><span>ENTIRE</span><span>ENTIRE</span><span>ENTIRE</span><span>ENTIRE</span><span>ENTIRE</span>
+        </div>
+    </div>
+
+    <div class="marquee-wrapper reverse">
+        <div class="marquee-text solid fast">
+            <span>INTERFACE</span><span>INTERFACE</span><span>INTERFACE</span><span>INTERFACE</span><span>INTERFACE</span><span>INTERFACE</span>
+        </div>
+    </div>
+
+    <div class="marquee-wrapper">
+        <div class="marquee-text outline">
+            <span>DESIGN</span><span>DESIGN</span><span>DESIGN</span><span>DESIGN</span><span>DESIGN</span><span>DESIGN</span><span>DESIGN</span><span>DESIGN</span>
+        </div>
+    </div>
+
+    <!-- The actual UI block overlaying the chaos -->
+    <div class="center-block">
+        <h2>OVERLOAD</h2>
+        <p>DO NOT LOOK AWAY.</p>
+        <button style="margin-top: 2rem; padding: 15px 30px; background: var(--bg); color: var(--accent); border: none; font-family: 'Archivo Black'; font-size: 1.2rem; cursor: pointer;">ENTER</button>
+    </div>
+
+</body>
+</html>

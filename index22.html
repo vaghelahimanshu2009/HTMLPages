@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #22 - Zen Bamboo Minimal</title>
+    <!-- Elegant minimal sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500&family=Shippori+Mincho&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #faf9f6; /* Washi paper white */
+            --text-dark: #333333; /* Dark charcoal */
+            --accent: #5e6b54; /* Muted bamboo green */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-dark);
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Essential scrollbar hiding for minimal look */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+
+        /* FADES (Intersection Observer setup) */
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 1.5s ease, transform 1.5s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* 
+          =============================================
+          VERTICAL TEXT LAYOUTS
+          =============================================
+        */
+        .vert-text {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-family: 'Shippori Mincho', serif;
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 10vh 10vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* 
+          =============================================
+          FOLD 1: HERO
+          =============================================
+        */
+        .hero { justify-content: space-between; }
+        .hero-left { flex: 1; }
+        .hero-right { flex: 1; display: flex; justify-content: flex-end; }
+        
+        .h-title { font-size: 5rem; letter-spacing: 15px; margin-bottom: 2rem; color: var(--text-dark); }
+        .h-desc { font-size: 1.1rem; max-width: 400px; line-height: 2; color: #666; font-weight: 300; }
+
+        .vert-highlight { font-size: clamp(4rem, 8vw, 8rem); color: var(--accent); opacity: 0.1; position: absolute; right: 5vw; top: 10vh; user-select: none; pointer-events: none;}
+
+        /* Deeply minimal circle art */
+        .enso { width: 300px; height: 300px; border: 2px solid var(--accent); border-radius: 50%; opacity: 0.8; animation: breathe 10s infinite alternate ease-in-out; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: -1; }
+        @keyframes breathe { 0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.2;} 100% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.6;} }
+
+        /* 
+          =============================================
+          FOLD 2: PHILOSOPHY
+          =============================================
+        */
+        .phil { flex-direction: column; text-align: center; }
+        .p-text { font-family: 'Shippori Mincho', serif; font-size: 2.5rem; line-height: 1.6; max-width: 800px; color: #444; }
+
+        /* 
+          =============================================
+          FOLD 3: GALLERY (Empty Space Focus)
+          =============================================
+        */
+        .gallery { padding: 5vw; display: flex; gap: 5vw; min-height: 80vh;}
+        .g-item { flex: 1; border: 1px solid #e0e0e0; display: flex; justify-content: center; align-items: center; background: #fff; padding: 2rem;}
+        .g-item img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; mix-blend-mode: multiply; filter: grayscale(50%);}
+        .g-text { width: 50px; font-size: 1.5rem; letter-spacing: 5px; color: var(--accent); }
+
+        /* 
+          =============================================
+          FOLD 4 & 5: CONTACT & FOOTER
+          =============================================
+        */
+        .contact { flex-direction: column; }
+        .c-form { max-width: 600px; width: 100%; margin-top: 4rem; }
+        .c-form input, .c-form textarea { width: 100%; background: transparent; border: none; border-bottom: 1px solid #ccc; padding: 1.5rem 0; font-family: 'Zen Kaku Gothic New'; font-size: 1.1rem; outline: none; margin-bottom: 2rem; color: var(--text-dark); transition: border-color 0.3s;}
+        .c-form input:focus, .c-form textarea:focus { border-color: var(--accent); }
+        .btn-zen { padding: 1rem 3rem; background: transparent; color: var(--text-dark); border: 1px solid #aaa; border-radius: 0; cursor: pointer; font-size: 1rem; transition: 0.3s; letter-spacing: 2px;}
+        .btn-zen:hover { background: var(--text-dark); color: #fff;}
+
+        footer { padding: 3vw 10vw; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee;}
+
+    </style>
+</head>
+<body>
+
+    <!-- FOLD 1: HERO -->
+    <section class="hero">
+        <div class="enso"></div>
+        <div class="vert-highlight vert-text">静寂</div>
+        <div class="hero-left fade-in">
+            <h1 class="h-title">SILENCE.</h1>
+            <p class="h-desc">Embracing the void. We design digital spaces where content breathes. White space is not emptiness; it is the structure that gives form to the visible.</p>
+        </div>
+        <div class="hero-right fade-in">
+            <!-- Example of pure CSS minimalism -->
+            <div style="width:1px; height: 300px; background: var(--accent);"></div>
+        </div>
+    </section>
+
+    <!-- FOLD 2: PHILOSOPHY -->
+    <section class="phil">
+        <p class="p-text fade-in">"Perfection is achieved, not when there is nothing more to add, but when there is nothing left to take away."</p>
+        <div style="width: 50px; height: 1px; background: #999; margin: 3rem auto;" class="fade-in"></div>
+    </section>
+
+    <!-- FOLD 3: SPATIAL GALLERY -->
+    <section class="gallery">
+        <div class="g-item fade-in" style="transition-delay: 0.1s;">
+            <img src="https://images.unsplash.com/photo-1542478542-a89c313106ab?auto=format&fit=crop&q=80&w=800" alt="Bamboo">
+        </div>
+        <div class="g-text vert-text fade-in" style="transition-delay: 0.3s;">NATURE</div>
+        <div class="g-item fade-in" style="transition-delay: 0.5s;">
+            <img src="https://images.unsplash.com/photo-1510133744874-0968962491a9?auto=format&fit=crop&q=80&w=800" alt="Stone">
+        </div>
+    </section>
+
+    <!-- FOLD 4: CONTACT -->
+    <section class="contact">
+        <h2 style="font-size: 2.5rem; font-weight: 300; letter-spacing: 5px;" class="fade-in">CONNECT</h2>
+        <form class="c-form fade-in">
+            <input type="text" placeholder="Name">
+            <input type="email" placeholder="Email">
+            <button class="btn-zen" type="button">SEND MESSAGE</button>
+        </form>
+    </section>
+
+    <!-- FOLD 5: FOOTER -->
+    <footer>
+        <div style="font-size:0.9rem; letter-spacing:2px;">Washi Studio © 2026</div>
+        <div style="display:flex; gap: 2rem;">
+            <a href="#" style="color:#666; text-decoration:none;">Behance</a>
+            <a href="#" style="color:#666; text-decoration:none;">Instagram</a>
+        </div>
+    </footer>
+
+    <!-- INTERSECTION OBSERVER FOR FADE INS -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('.fade-in').forEach((el) => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

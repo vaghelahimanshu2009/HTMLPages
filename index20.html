@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #20 - Retro Arcade</title>
+    <!-- 8-Bit Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #0b0b1a; /* Deep space blue */
+            --neon-pink: #ff007f;
+            --neon-blue: #00f3ff;
+            --neon-yellow: #ffee00;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: #fff;
+            font-family: 'Press Start 2P', cursive;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 
+          =============================================
+          CRT OVERLAY
+          =============================================
+        */
+        body::before {
+            content: ''; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 4px, 3px 100%;
+            z-index: 999; pointer-events: none;
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.9);
+        }
+
+        /* Scanline Animation */
+        .scanline {
+            width: 100%; height: 100px; z-index: 998; position: fixed; pointer-events: none;
+            background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(255,255,255,0.2) 50%, rgba(0,0,0,0) 100%);
+            opacity: 0.1; animation: scanline 8s linear infinite; top: -100px;
+        }
+        @keyframes scanline { 100% { top: 120vh; } }
+
+        /* 
+          =============================================
+          GLOBAL TEXT STYLES
+          =============================================
+        */
+        .blink { animation: blink 1s step-end infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .glow-pink { color: var(--neon-pink); text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink); }
+        .glow-blue { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue); }
+        .glow-yellow { color: var(--neon-yellow); text-shadow: 0 0 10px var(--neon-yellow); }
+
+        h1, h2, h3 { line-height: 1.5; }
+
+        section { min-height: 100vh; padding: 5vw; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-bottom: 4px dashed var(--neon-blue); }
+
+        /* 
+          =============================================
+          FOLD 1: INSERT COIN
+          =============================================
+        */
+        .hero { position: relative; }
+        .title { font-size: clamp(3rem, 6vw, 6rem); margin-bottom: 2rem; animation: float 3s ease-in-out infinite; }
+        
+        /* Pure CSS Space Invader Pixel Art */
+        .invader {
+            width: 110px; height: 80px; margin: 0 auto 3rem auto;
+            background: transparent;
+            box-shadow: 
+                30px 0 0 0 var(--neon-pink), 70px 0 0 0 var(--neon-pink),
+                40px 10px 0 0 var(--neon-pink), 60px 10px 0 0 var(--neon-pink),
+                30px 20px 0 0 var(--neon-pink), 40px 20px 0 0 var(--neon-pink), 50px 20px 0 0 var(--neon-pink), 60px 20px 0 0 var(--neon-pink), 70px 20px 0 0 var(--neon-pink),
+                10px 30px 0 0 var(--neon-pink), 20px 30px 0 0 var(--neon-pink), 30px 30px 0 0 var(--neon-pink), 50px 30px 0 0 var(--neon-pink), 70px 30px 0 0 var(--neon-pink), 80px 30px 0 0 var(--neon-pink), 90px 30px 0 0 var(--neon-pink),
+                0px 40px 0 0 var(--neon-pink), 10px 40px 0 0 var(--neon-pink), 20px 40px 0 0 var(--neon-pink), 30px 40px 0 0 var(--neon-pink), 40px 40px 0 0 var(--neon-pink), 50px 40px 0 0 var(--neon-pink), 60px 40px 0 0 var(--neon-pink), 70px 40px 0 0 var(--neon-pink), 80px 40px 0 0 var(--neon-pink), 90px 40px 0 0 var(--neon-pink), 100px 40px 0 0 var(--neon-pink),
+                0px 50px 0 0 var(--neon-pink), 20px 50px 0 0 var(--neon-pink), 30px 50px 0 0 var(--neon-pink), 40px 50px 0 0 var(--neon-pink), 50px 50px 0 0 var(--neon-pink), 60px 50px 0 0 var(--neon-pink), 70px 50px 0 0 var(--neon-pink), 80px 50px 0 0 var(--neon-pink), 100px 50px 0 0 var(--neon-pink),
+                0px 60px 0 0 var(--neon-pink), 20px 60px 0 0 var(--neon-pink), 80px 60px 0 0 var(--neon-pink), 100px 60px 0 0 var(--neon-pink),
+                30px 70px 0 0 var(--neon-pink), 40px 70px 0 0 var(--neon-pink), 60px 70px 0 0 var(--neon-pink), 70px 70px 0 0 var(--neon-pink);
+            transform: scale(0.8);
+        }
+        .invader:hover { animation: pulse-pink 0.2s infinite alternate; }
+
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        @keyframes pulse-pink { flex: 1; filter: drop-shadow(0 0 10px var(--neon-pink)); }
+
+        /* 
+          =============================================
+          FOLD 2: HIGH SCORES / STATS
+          =============================================
+        */
+        .high-scores { padding: 4rem; border: 4px solid var(--neon-blue); box-shadow: 0 0 20px var(--neon-blue), inset 0 0 20px var(--neon-blue); background: rgba(0,243,255,0.05);}
+        .score-row { display: flex; justify-content: space-between; width: 100%; max-width: 600px; margin: 1.5rem auto; font-size: 1.5rem;}
+        .score-row span:nth-child(2) { color: var(--neon-yellow); }
+
+        /* 
+          =============================================
+          FOLD 3: UPGRADES / SERVICES
+          =============================================
+        */
+        .upgrades-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; width: 100%; max-width: 1000px;}
+        .u-card { border: 4px solid var(--neon-pink); padding: 3rem 2rem; position: relative; cursor: pointer; transition: 0.2s steps(2);}
+        .u-card:hover { background: var(--neon-pink); color: var(--bg-color); box-shadow: 0 0 30px var(--neon-pink); }
+        .u-card:hover h3 { color: var(--bg-color); text-shadow: none;}
+        .u-icon { font-size: 3rem; margin-bottom: 1rem; }
+
+        /* 
+          =============================================
+          FOLD 4: GAME OVER BANNER
+          =============================================
+        */
+        .game-over { background: var(--bg-color); border: none;}
+        .game-over h2 { font-size: 8vw; color: red; text-shadow: 0 0 20px red; letter-spacing: 5px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="scanline"></div>
+
+    <!-- FOLD 1: START SCREEN -->
+    <section class="hero">
+        <div class="invader"></div>
+        <h1 class="title glow-blue">ARCADE<br>STUDIOS</h1>
+        <p style="margin-bottom: 4rem; line-height: 2;">WE BUILD DIGITAL EXPERIENCES<br>THAT ARE CRAZY HARD TO BEAT.</p>
+        <div class="glow-yellow blink" style="font-size: 2rem;">INSERT COIN TO CONTINUE</div>
+    </section>
+
+    <!-- FOLD 2: HIGH SCORES -->
+    <section>
+        <h2 class="glow-pink" style="margin-bottom: 3rem; font-size: 3rem;">HIGH SCORES</h2>
+        <div class="high-scores">
+            <div class="score-row"><span>1ST</span><span>999,990</span><span>AWW</span></div>
+            <div class="score-row"><span>2ND</span><span>872,100</span><span>CSS</span></div>
+            <div class="score-row"><span>3RD</span><span>645,000</span><span>JS_</span></div>
+            <div class="score-row"><span>4TH</span><span>431,200</span><span>DEV</span></div>
+            <div class="score-row"><span>5TH</span><span>120,000</span><span>UX_</span></div>
+        </div>
+    </section>
+
+    <!-- FOLD 3: POWER UPS -->
+    <section>
+        <h2 class="glow-blue" style="margin-bottom: 4rem; font-size: 3rem;">POWER-UPS</h2>
+        <div class="upgrades-grid">
+            <div class="u-card">
+                <div class="u-icon">⚡</div>
+                <h3 class="glow-pink">SPEED BOOST</h3>
+                <p style="font-size: 0.8rem; margin-top: 1rem; line-height: 1.5;">Optmized runtime. Instant loads.</p>
+            </div>
+            <div class="u-card" style="border-color: var(--neon-yellow);">
+                <div class="u-icon" style="color: var(--neon-yellow)">⭐</div>
+                <h3 class="glow-yellow">INVINCIBILITY</h3>
+                <p style="font-size: 0.8rem; margin-top: 1rem; line-height: 1.5;">Unhackable secure architecture.</p>
+            </div>
+            <div class="u-card" style="border-color: var(--neon-blue);">
+                <div class="u-icon" style="color: var(--neon-blue)">👾</div>
+                <h3 class="glow-blue">EXTRA LIFE</h3>
+                <p style="font-size: 0.8rem; margin-top: 1rem; line-height: 1.5;">Scalable clouds to save you.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOLD 4 & 5: GAME OVER FOOTER -->
+    <section class="game-over">
+        <h2 class="blink">GAME OVER</h2>
+        <p style="margin-top: 4rem; font-size: 1rem; color: #555;">CONTINUE? 9... 8... 7...</p>
+        <div style="margin-top: 5rem; display:flex; gap:2rem;">
+            <a href="#" style="color:var(--neon-blue); text-decoration:none;">TWITTER</a>
+            <a href="#" style="color:var(--neon-pink); text-decoration:none;">GITHUB</a>
+        </div>
+    </section>
+
+</body>
+</html>

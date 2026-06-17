@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #23 - Terminal CLI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --term-bg: #0c0c0c;
+            --term-fg: #00ff41;
+            --term-dim: #008f11;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--term-bg);
+            color: var(--term-fg);
+            font-family: 'Fira Code', monospace;
+            overflow-x: hidden;
+            padding: 2rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* Scanline globally */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none; z-index: 999;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; }
+
+        .line { margin-bottom: 0.5rem; display: flex; }
+        .prompt { color: var(--term-dim); margin-right: 1rem; user-select: none; }
+        .command { font-weight: bold; color: #fff; }
+        .output { margin-bottom: 2rem; white-space: pre-wrap; margin-left: 2.5rem; }
+
+        .cursor { display: inline-block; width: 10px; height: 1.2rem; background-color: var(--term-fg); animation: blink 1s step-end infinite; vertical-align: bottom;}
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* Fake typing animation */
+        .typewriter { overflow: hidden; white-space: nowrap; border-right: 2px solid var(--term-fg); animation: typing 2s steps(40, end), blink-caret .75s step-end infinite; }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--term-fg); } }
+
+        /* Navigation */
+        .links a { color: var(--term-fg); text-decoration: none; border-bottom: 1px dotted var(--term-fg); margin-right: 2rem; transition: 0.3s;}
+        .links a:hover { background: var(--term-fg); color: var(--term-bg); }
+
+        .ascii-art { font-size: 0.8rem; line-height: 1.2; margin-bottom: 2rem; color: #fff;}
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="ascii-art">
+   _____  _____  _____       _______  __   ___  _____ _____ 
+  /  _  \|  __ \|  __ \     |__   __|/  | |__ \/ ____/ ____|
+ |  | | || |__) | |__) |_______| |   `| |    ) | |   | |    
+ |  | | ||  _  /|  _  /|_______| |    | |   / /| |   | |    
+ |  |_| || | \ \| | \ \        | |   _| |_ / /_| |___| |____
+  \_____/|_|  \_\_|  \_\       |_|  |_____|____|\_____\_____|
+        </div>
+
+        <div class="line">
+            <span class="prompt">root@system:~#</span>
+            <span class="command">./initialize_portfolio.sh</span>
+        </div>
+        <div class="output" style="color: #ccc;">
+[ OK ] Loading aesthetic matrix...
+[ OK ] Setting typography to Fira Code...
+[ OK ] Bypassing visual GUI limits...
+System Ready.
+        </div>
+
+        <div class="line">
+            <span class="prompt">guest@Awards:~$</span>
+            <span class="command">cat about.txt</span>
+        </div>
+        <div class="output">
+We are a collective of developers stripping away the bloated graphical interfaces of the modern web. 
+We believe that pure data representation is the ultimate form of digital beauty. 
+
+Welcome to our directory.
+        </div>
+
+        <div class="line">
+            <span class="prompt">guest@Awards:~$</span>
+            <span class="command">ls -la ./services/</span>
+        </div>
+        <div class="output" style="display:grid; grid-template-columns: 1fr 1fr;">
+<div>drwxr-xr-x 1 root 1024 Apr 10 10:15 .</div>
+<div>-rw-r--r-- 1 root 4094 Apr 10 10:15 backend.js</div>
+<div>-rw-r--r-- 1 root 2048 Apr 10 10:15 unix_arch.c</div>
+<div>-rw-r--r-- 1 root 9091 Apr 10 10:15 security.cfg</div>
+        </div>
+
+        <div class="line">
+            <span class="prompt">guest@Awards:~$</span>
+            <span class="command">execute --hyper-links</span>
+        </div>
+        <div class="output links">
+            <a href="#">[01] VIEW_PROJECTS</a>
+            <a href="#">[02] GET_SSH_KEYS</a>
+            <a href="#">[03] CONTACT_SYSADMIN</a>
+        </div>
+
+        <div class="line">
+            <span class="prompt">guest@Awards:~$</span>
+            <span class="command" id="dynamic-typing"></span><span class="cursor"></span>
+        </div>
+    </div>
+
+    <script>
+        const phrase = "echo 'END OF PROGRAM. WAITING FOR INPUT.'";
+        const el = document.getElementById('dynamic-typing');
+        let idx = 0;
+        setTimeout(() => {
+            setInterval(() => {
+                if(idx < phrase.length) {
+                    el.innerHTML += phrase.charAt(idx);
+                    idx++;
+                }
+            }, 100);
+        }, 1500);
+    </script>
+</body>
+</html>

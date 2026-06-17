@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #47 - Infinite Starfield</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --sky: #01040f;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--sky);
+            color: #fff;
+            font-family: 'Space Mono', monospace;
+            overflow: hidden;
+            height: 100vh;
+            /* Radial glow in center */
+            background-image: radial-gradient(circle at center, #05163f 0%, var(--sky) 100%);
+        }
+
+        /* 
+          =============================================
+          THE PURE CSS STARFIELD
+          =============================================
+        */
+        /* 
+           Using a masterfully long box-shadow list on a single 1px div 
+           allows us to render hundreds of stars without cluttering the DOM.
+        */
+        .stars-container { width: 200%; height: 200%; position: absolute; top: -50%; left: -50%;}
+
+        .stars, .stars2, .stars3 { position: absolute; top: 0; left: 0; border-radius: 50%; background: transparent; }
+
+        /* Slow distant stars */
+        .stars {
+            width: 1px; height: 1px;
+            box-shadow: 100px 300px #fff, 400px 150px #fff, 800px 700px #fff, 1200px 40px #fff, 1600px 900px #fff, 
+                        200px 500px #fff, 600px 800px #fff, 1000px 200px #fff, 1400px 600px #fff, 1800px 100px #fff,
+                        150px 750px #fff, 550px 350px #fff, 950px 950px #fff, 1350px 250px #fff, 1750px 850px #fff,
+                        350px 150px #fff, 750px 650px #fff, 1150px 450px #fff, 1550px 750px #fff, 1950px 350px #fff;
+            animation: rotate-stars 200s linear infinite;
+        }
+
+        /* Medium stars */
+        .stars2 {
+            width: 2px; height: 2px;
+            box-shadow: 200px 100px #fff, 500px 600px #fff, 900px 300px #fff, 1300px 800px #fff, 1700px 200px #fff, 
+                        300px 900px #fff, 700px 400px #fff, 1100px 700px #fff, 1500px 100px #fff, 1900px 500px #fff;
+            animation: rotate-stars 150s linear infinite;
+        }
+
+        /* Close fast stars (glowing) */
+        .stars3 {
+            width: 3px; height: 3px;
+            box-shadow: 50px 850px #fff, 450px 250px #fff, 850px 750px #fff, 1250px 450px #fff, 1650px 950px #fff,
+                        250px 50px #fff, 650px 550px #fff, 1050px 150px #fff, 1450px 650px #fff, 1850px 350px #fff;
+            animation: rotate-stars 100s linear infinite;
+            filter: drop-shadow(0 0 5px #fff);
+        }
+
+        @keyframes rotate-stars {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 
+          =============================================
+          CENTER UI
+          =============================================
+        */
+        .center-ui {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        h1 { font-size: 5rem; letter-spacing: 20px; text-transform: uppercase; margin-bottom: 2rem;}
+        p { letter-spacing: 5px; color: #aaa;}
+
+        .line { width: 1px; height: 100px; background: #fff; margin: 2rem auto; opacity: 0.5;}
+
+    </style>
+</head>
+<body>
+
+    <div class="stars-container">
+        <div class="stars"></div>
+        <div class="stars2"></div>
+        <div class="stars3"></div>
+    </div>
+
+    <div class="center-ui">
+        <h1>V O I D</h1>
+        <div class="line"></div>
+        <p>ORBITAL VELOCITY ENGAGED</p>
+    </div>
+
+</body>
+</html>

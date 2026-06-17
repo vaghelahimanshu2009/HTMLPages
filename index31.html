@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #31 - Yin Yang Split Scroll</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --w: #ffffff;
+            --b: #000000;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* Hide body scrollbar since we control the scroll in containers */
+        body {
+            font-family: 'Syne', sans-serif;
+            overflow: hidden;
+            display: flex;
+            width: 100vw; height: 100vh;
+        }
+
+        /* 
+          =============================================
+          THE SPLIT CONTAINERS
+          =============================================
+        */
+        .half {
+            flex: 1; height: 100vh;
+            overflow-y: scroll; scroll-behavior: smooth;
+        }
+        
+        /* Hide scrollbars for the halves */
+        .half::-webkit-scrollbar { display: none; }
+        .half { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .left { background: var(--b); color: var(--w); }
+        .right { background: var(--w); color: var(--b); }
+
+        /* The central dividing line that reacts */
+        .divider {
+            position: fixed; top: 0; left: 50%; width: 2px; height: 100%; z-index: 100;
+            background: linear-gradient(180deg, var(--w) 50%, var(--b) 50%); background-size: 100% 200%; background-position: top;
+            transform: translateX(-50%); mix-blend-mode: difference;
+        }
+
+        /* 
+          =============================================
+          CONTENT SECTIONS WITHIN HALVES
+          =============================================
+        */
+        .section {
+            height: 100vh; padding: 5vw; display: flex; flex-direction: column; justify-content: center;
+        }
+        .left .section { align-items: flex-end; text-align: right; }
+        .right .section { align-items: flex-start; text-align: left; }
+
+        h1 { font-size: 8vw; font-weight: 800; line-height: 1; text-transform: uppercase; margin-bottom: 2rem;}
+        p { font-size: 1.5rem; max-width: 400px; line-height: 1.5;}
+
+        /* Outline variation */
+        .outline { -webkit-text-stroke: 2px; color: transparent; }
+        .left .outline { -webkit-text-stroke-color: var(--w); }
+        .right .outline { -webkit-text-stroke-color: var(--b); }
+
+        .circle { width: 300px; height: 300px; border-radius: 50%; margin: 2rem 0;}
+        .left .circle { background: var(--w); }
+        .right .circle { border: 2px solid var(--b); }
+
+    </style>
+</head>
+<body>
+
+    <div class="divider"></div>
+
+    <!-- LEFT SIDE (Scrolls Down normally) -->
+    <div class="half left" id="left">
+        <div class="section">
+            <h1>DARK</h1>
+            <p>The absence of light. The foundation of structure. We build platforms that command attention through raw mass.</p>
+        </div>
+        <div class="section">
+            <h1 class="outline">FORM</h1>
+            <div class="circle"></div>
+        </div>
+        <div class="section">
+            <h1>CHAOS</h1>
+            <p>Embrace the absolute zero.</p>
+        </div>
+    </div>
+
+    <!-- RIGHT SIDE (Scrolls Up automatically via JS mirroring) -->
+    <div class="half right" id="right">
+        <div class="section">
+            <h1>ORDER</h1>
+            <p>Find balance in the void.</p>
+        </div>
+        <div class="section">
+            <h1 class="outline">VOID</h1>
+            <div class="circle"></div>
+        </div>
+        <div class="section">
+            <h1>LIGHT</h1>
+            <p>The presence of all colors. The clarity of vision. We design interfaces that illuminate the digital darkness.</p>
+        </div>
+    </div>
+
+    <script>
+        const left = document.getElementById('left');
+        const right = document.getElementById('right');
+
+        // Pre-scroll the right side to the absolute bottom initially
+        right.scrollTop = right.scrollHeight;
+        
+        let isSyncingLeftScroll = false;
+        let isSyncingRightScroll = false;
+
+        // When left scrolls down, force right to scroll UP proportionally
+        left.addEventListener('scroll', function(e) {
+            if (!isSyncingLeftScroll) {
+                isSyncingRightScroll = true;
+                
+                // Calculate percentage scrolled on left
+                const leftPercent = left.scrollTop / (left.scrollHeight - left.clientHeight);
+                
+                // Apply reverse percentage to right
+                right.scrollTop = (right.scrollHeight - right.clientHeight) - (leftPercent * (right.scrollHeight - right.clientHeight));
+            }
+            isSyncingLeftScroll = false;
+        });
+
+        // When right scrolls down, force left to scroll UP proportionally
+        right.addEventListener('scroll', function(e) {
+            if (!isSyncingRightScroll) {
+                isSyncingLeftScroll = true;
+                
+                // Calculate percentage scrolled on right (inverted logic)
+                const rightPercent = 1 - (right.scrollTop / (right.scrollHeight - right.clientHeight));
+                
+                // Apply percentage to left
+                left.scrollTop = rightPercent * (left.scrollHeight - left.clientHeight);
+            }
+            isSyncingRightScroll = false;
+        });
+    </script>
+</body>
+</html>

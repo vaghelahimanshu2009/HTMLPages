@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #18 - Newspaper Editorial</title>
+    <!-- Classic Serif & Dense Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Chivo:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --paper: #f0eadd; /* Aged newsprint paper */
+            --ink: #1a1a1a;
+            --ink-light: #444;
+            --border-heavy: 4px solid var(--ink);
+            --border-light: 1px solid var(--ink);
+            --border-double: 3px double var(--ink);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--paper);
+            color: var(--ink);
+            font-family: 'Playfair Display', serif;
+            overflow-x: hidden;
+            background-image: url('data:image/svg+xml,%3Csvg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cfilter id=\"noiseFilter\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.9\" numOctaves=\"3\" stitchTiles=\"stitch\"/%3E%3C/filter%3E%3Crect width=\"100%25\" height=\"100%25\" filter=\"url(%23noiseFilter)\" opacity=\"0.08\"/%3E%3C/svg%3E');
+        }
+
+        ::selection { background: var(--ink); color: var(--paper); }
+
+        h1, h2, h3, .serif { font-family: 'Playfair Display', serif; }
+        .sans { font-family: 'Chivo', sans-serif; }
+
+        /* THE GRID CONTAINER */
+        .broadsheet { width: 95vw; max-width: 1600px; margin: 2vw auto; border: var(--border-light); background: rgba(255,255,255,0.2); }
+
+        /* HEADER / MASTHEAD */
+        header { border-bottom: var(--border-heavy); padding: 1rem 0; text-align: center; position: relative;}
+        .h-info { display: flex; justify-content: space-between; border-top: var(--border-light); border-bottom: var(--border-double); padding: 0.5rem 2rem; font-family: 'Chivo'; font-size: 0.9rem; text-transform: uppercase; margin: 1rem 0; font-weight: 700;}
+        .masthead { font-size: clamp(4rem, 10vw, 8rem); font-weight: 900; letter-spacing: -2px; line-height: 0.9;}
+
+        /* MAIN CONTENT AREA */
+        .content-wrap { display: flex; flex-wrap: wrap; }
+        
+        /* COLUMN SYSTEM */
+        .col { padding: 2rem; display: flex; flex-direction: column; }
+        .col-main { flex: 2; border-right: var(--border-light); min-width: 300px; }
+        .col-side { flex: 1; min-width: 300px; }
+
+        .article { margin-bottom: 3rem; }
+        .article.bordered { border-bottom: var(--border-light); padding-bottom: 2rem; margin-bottom: 2rem;}
+        
+        .a-headline { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; line-height: 1; margin-bottom: 1rem; letter-spacing: -1px;}
+        .a-headline.italic { font-style: italic; }
+        
+        .a-meta { font-family: 'Chivo'; font-size: 0.8rem; text-transform: uppercase; font-weight: 700; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 0.5rem 0; margin-bottom: 1.5rem; display: inline-block; width: 100%;}
+        
+        .a-text { font-size: 1.15rem; line-height: 1.6; text-align: justify; column-count: 2; column-gap: 2rem; }
+        .a-text.single-col { column-count: 1; }
+        .dropcap::first-letter { float: left; font-size: 5rem; line-height: 4rem; padding-right: 0.5rem; font-weight: 900; }
+
+        /* IMAGES PORTION */
+        .img-block { width: 100%; border: var(--border-light); padding: 0.5rem; background: var(--paper); margin-bottom: 1.5rem;}
+        .img-block img { width: 100%; height: auto; filter: grayscale(100%) contrast(120%); display: block; mix-blend-mode: multiply;}
+        .caption { font-family: 'Chivo'; font-size: 0.8rem; padding-top: 0.5rem; text-transform: uppercase; text-align: right;}
+
+        /* ADVERTISEMENT BLOCK */
+        .ad-block { border: var(--border-heavy); padding: 2rem; text-align: center; margin: 2rem 0; background: #000; color: #fff;}
+        .ad-block h3 { font-family: 'Chivo'; font-size: 3rem; text-transform: uppercase; letter-spacing: 5px; }
+
+        /* FOLD SYSTEM is represented by rows */
+        .row-sep { width: 100%; border-bottom: var(--border-heavy); }
+
+        @media (max-width: 900px) {
+            .a-text { column-count: 1; }
+            .col-main { border-right: none; border-bottom: var(--border-heavy); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="broadsheet">
+        
+        <!-- FOLD 1: MASTHEAD -->
+        <header>
+            <div class="sans" style="font-size:0.8rem; letter-spacing:2px; margin-bottom:1rem;">THE WORLD'S LEADING DIGITAL BROADSHEET</div>
+            <h1 class="masthead">The Chronicle.</h1>
+            <div class="h-info">
+                <span>VOL. CXLII No. 49,012</span>
+                <span>NEW YORK, FRIDAY, APRIL 10, 2026</span>
+                <span>PRICE: INVALUABLE</span>
+            </div>
+        </header>
+
+        <!-- FOLD 2: FRONT PAGE NEWS (Row 1) -->
+        <div class="content-wrap">
+            <div class="col col-main">
+                <article class="article">
+                    <h2 class="a-headline">DESIGN BRUTALISM TAKES THE WEB BY STORM</h2>
+                    <div class="a-meta">By Chief Editor M. Hawthorne</div>
+                    <div class="img-block">
+                        <img src="file:///C:/Users/Himanshu/.gemini/antigravity/brain/c7bee168-9405-4880-b150-9f22b2890e72/newspaper_art_1775796854028.png" alt="Halftone Art">
+                        <div class="caption">Fig 1. An abstract representation of modern layouts.</div>
+                    </div>
+                    <div class="a-text dropcap">
+                        <p>The era of gentle gradients, overly rounded corners, and soft drop shadows appears to be reaching its twilight. Across the digital expanse, highly structured, grid-based editorial designs are resurrecting the ghost of print media. Designers cite a profound exhaustion with "corporate cleanliness," yearning instead for the tangible, raw aesthetic of historical broadsheets. Typography has returned to its rightful throne as the primary architectural element of the page, where serif fonts govern large blocks of justified text and dense columns.</p>
+                        <p>What we observe is not merely a nostalgic retreat, but a sophisticated synthesis. These layouts employ modern computational power to render complex CSS grid methodologies that would have been unimaginable just a decade ago. The result is a web interface that commands attention through authority and structure rather than mere visual spectacle.</p>
+                    </div>
+                </article>
+            </div>
+            
+            <div class="col col-side">
+                <article class="article bordered">
+                    <h2 class="a-headline italic" style="font-size:2.5rem;">Short Takes</h2>
+                    <div class="a-text single-col" style="font-size:1rem;">
+                        <p><strong>MARKET SHIFTS:</strong> User engagement algorithms report a 40% increased retention rate on websites utilizing complex, text-heavy architectures.</p>
+                        <br>
+                        <p><strong>TECH:</strong> The newly released CSS standards finally permit algorithmic hyphenation across all major viewing platforms, ending the ragged-right era.</p>
+                    </div>
+                </article>
+
+                <div class="ad-block">
+                    <h3 style="font-size:1rem; letter-spacing:2px; color:#aaa; margin-bottom:1rem;">ADVERTISEMENT</h3>
+                    <h3>MODERN<br>GRID<br>SYSTEMS</h3>
+                    <button style="margin-top:2rem; padding:10px 20px; background:#fff; color:#000; border:none; font-family:'Chivo'; font-weight:bold; cursor:pointer;">LEARN MORE</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row-sep"></div>
+
+        <!-- FOLD 3 & 4: OPINION & FOOTER (Row 2) -->
+        <div class="content-wrap" style="background: rgba(0,0,0,0.02)">
+            <div class="col" style="flex:1; border-right: var(--border-light);">
+                <h2 class="sans" style="font-size:2rem; border-bottom:2px solid; padding-bottom:1rem; margin-bottom:2rem;">OPINION</h2>
+                <h3 class="a-headline" style="font-size:2rem;">The Death of the Scrollbar?</h3>
+                <p class="a-text single-col" style="font-size:1rem;">As we transition toward completely hijacked scroll experiences and lateral movement, we must ask ourselves what we lose in predictability. The scrollbar was the ultimate map of our position within a document. Without it, we drift.</p>
+            </div>
+            
+            <div class="col" style="flex:2; display:flex; justify-content:center; align-items:center;">
+                <div style="text-align:center;">
+                    <h1 class="masthead" style="font-size: clamp(3rem, 5vw, 6rem); opacity:0.1; line-height:1;">END OF<br>PRINT</h1>
+                    <p class="sans" style="margin-top:1rem; font-weight:700;">© 2026 THE CHRONICLE DIGITAL EDITION.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

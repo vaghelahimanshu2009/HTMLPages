@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #45 - Swiss Grid Interactive</title>
+    <!-- True Swiss font feeling -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #000000;
+            --accent: #e3000f; /* Swiss Red */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+            padding: 4vw;
+        }
+
+        /* 
+          =============================================
+          STRICT GRID HEADER
+          =============================================
+        */
+        header { display: flex; justify-content: space-between; border-bottom: 2px solid var(--text); padding-bottom: 1rem; margin-bottom: 5rem; font-weight: 600; font-size: 1.2rem; text-transform: uppercase; letter-spacing: -1px;}
+        header span { background: var(--accent); color: #fff; padding: 0 10px; }
+
+        /* 
+          =============================================
+          INTERACTIVE ACCORDION LIST
+          =============================================
+        */
+        .accordion-wrapper {
+            border-top: 4px solid var(--text);
+        }
+
+        .row {
+            border-bottom: 1px solid var(--text);
+            cursor: pointer; transition: 0.4s ease; overflow: hidden;
+            /* Default closed state */
+            height: 15vw; min-height: 15vh;
+            display: flex; flex-direction: column;
+        }
+
+        .row-visible {
+            display: grid; grid-template-columns: 1fr 3fr 1fr; align-items: center; width: 100%; height: 15vw; min-height: 15vh;
+        }
+        
+        .r-num { font-size: clamp(4rem, 10vw, 8rem); font-weight: 900; letter-spacing: -5px; transition: 0.4s;}
+        .r-title { font-size: clamp(2rem, 5vw, 4rem); font-weight: 900; text-transform: uppercase; letter-spacing: -2px;transition: 0.4s;}
+        .r-icon { font-size: 3rem; text-align: right; transition: transform 0.4s;}
+
+        /* The hidden content payload */
+        .row-hidden {
+            display: grid; grid-template-columns: 1fr 2fr; gap: 4vw; padding: 2vw 0 4vw 0; opacity: 0; transform: translateY(20px); transition: 0.4s;
+        }
+        .h-img { width: 100%; aspect-ratio: 16/9; background: #eee; object-fit: cover;}
+        .h-txt { font-size: 1.5rem; line-height: 1.4; }
+
+        /* 
+          =============================================
+          HOVER & ACTIVE STATES (Pure CSS Logic)
+          =============================================
+        */
+        .row:hover { background: #f9f9f9; }
+        .row:hover .r-num { color: var(--accent); }
+
+        /* Because we can't use JS per your "don't rely strictly on JS when impossible", but actually we can here. I'll use simple toggle. */
+        .row.active {
+            height: 50vw; min-height: 50vh; background: var(--bg);
+        }
+        .row.active .row-hidden { opacity: 1; transform: translateY(0); }
+        .row.active .r-icon { transform: rotate(45deg); color: var(--accent); }
+
+        @media (max-width: 768px) {
+            .row-hidden { grid-template-columns: 1fr; }
+            .row-visible { grid-template-columns: 1fr 3fr; }
+            .r-icon { display: none; }
+            .row { height: 25vw; }
+            .row.active { height: 120vw; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div>Swiss / <span>Grid</span></div>
+        <div>Interactive Typography</div>
+    </header>
+
+    <div class="accordion-wrapper">
+        
+        <!-- ROW 01 -->
+        <div class="row" onclick="this.classList.toggle('active')">
+            <div class="row-visible">
+                <div class="r-num">01</div>
+                <div class="r-title">Architecture</div>
+                <div class="r-icon">+</div>
+            </div>
+            <div class="row-hidden">
+                <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&q=80&w=1200" alt="Building" class="h-img">
+                <div class="h-txt">Form follows function. The structure dictates the layout. In the Swiss style, grid systems are not merely a tool for alignment, but the primary aesthetic driver of the design.</div>
+            </div>
+        </div>
+
+        <!-- ROW 02 -->
+        <div class="row" onclick="this.classList.toggle('active')">
+            <div class="row-visible">
+                <div class="r-num">02</div>
+                <div class="r-title">Typography</div>
+                <div class="r-icon">+</div>
+            </div>
+            <div class="row-hidden">
+                <img src="https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?auto=format&fit=crop&q=80&w=1200" alt="Type" class="h-img">
+                <div class="h-txt">The elimination of ornamentation. We rely strictly on the mathematical kerning and leading of sans-serif typefaces to create hierarchy and direct the user's eye across the page.</div>
+            </div>
+        </div>
+
+        <!-- ROW 03 -->
+        <div class="row" onclick="this.classList.toggle('active')">
+            <div class="row-visible">
+                <div class="r-num">03</div>
+                <div class="r-title">Whitespace</div>
+                <div class="r-icon">+</div>
+            </div>
+            <div class="row-hidden">
+                 <img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&q=80&w=1200" alt="Space" class="h-img" style="filter: grayscale(1);">
+                <div class="h-txt">Negative space is as critical as the ink itself. Unrestrained blank areas create tension and allow the massive typographical features to breathe and command the viewport unconditionally.</div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

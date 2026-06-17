@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #35 - Film Negative</title>
+    <!-- Cinematic Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=PT+Sans:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --film: #111111;
+            --film-orange: #d35400;
+            --perforation: #050505;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'PT Sans', sans-serif;
+            margin: 0; padding: 0;
+            /* Heavy grain overlay */
+            background-image: url('data:image/svg+xml,%3Csvg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cfilter id=\"noiseFilter\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.9\" numOctaves=\"3\" stitchTiles=\"stitch\"/%3E%3C/filter%3E%3Crect width=\"100%25\" height=\"100%25\" filter=\"url(%23noiseFilter)\" opacity=\"0.2\"/%3E%3C/svg%3E');
+            
+            /* Enable proper horizontal scrolling on desktop via JS later, but this sets base rules */
+            overflow-y: hidden;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+        }
+
+        /* 
+          =============================================
+          THE 35mm FILM STRIP
+          =============================================
+        */
+        .film-strip {
+            height: 100vh;
+            background: var(--film);
+            display: flex;
+            align-items: center;
+            padding: 10vh 0;
+            position: relative;
+            width: max-content; /* Expands horizontally based on frames */
+        }
+
+        /* The perforations (sprocket holes) at top and bottom */
+        .film-strip::before, .film-strip::after {
+            content: ''; position: absolute; left: 0; width: 100%; height: 5vh; background: transparent;
+            /* Use repeating background to make the tiny rectangles */
+            background-image: radial-gradient(var(--perforation) 40%, transparent 45%);
+            background-size: 3vw 6vh;
+            background-position: center;
+        }
+        .film-strip::before { top: 2vh; }
+        .film-strip::after { bottom: 2vh; }
+
+        /* Generic edge text found on negatives */
+        .edge-code {
+            position: absolute; top: 8vh; left: 0; color: var(--film-orange); font-family: 'Courier New', Courier, monospace;
+            font-weight: bold; letter-spacing: 5px; font-size: 0.8rem; white-space: nowrap;
+            /* Make a super long repeating text purely in CSS */
+            width: 100%; overflow: hidden;
+        }
+        
+        .edge-code-bottom { top: auto; bottom: 8vh; transform: rotate(180deg); }
+
+        /* 
+          =============================================
+          INDIVIDUAL FRAMES
+          =============================================
+        */
+        .frame {
+            height: 80vh; width: 60vw; min-width: 800px;
+            margin: 0 2vw; border: 1px solid #333; border-radius: 5px;
+            position: relative; overflow: hidden;
+            display: flex;
+            background: #000;
+        }
+
+        .frame img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.8) hue-rotate(320deg) contrast(150%) brightness(0.8); opacity: 0.8; transition: 0.4s; }
+        .frame:hover img { filter: sepia(0) contrast(110%) brightness(1); opacity: 1;}
+
+        /* Content Overlay inside frames */
+        .f-content {
+            position: absolute; bottom: 0; left: 0; width: 100%; padding: 3rem;
+            background: linear-gradient(0deg, rgba(0,0,0,0.9), transparent);
+        }
+        .f-title { font-family: 'Oswald', sans-serif; font-size: 4rem; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 2px;}
+        .f-desc { font-size: 1.2rem; color: #bbb; max-width: 500px;}
+
+        /* Frame number marker */
+        .f-num { position: absolute; top: 1rem; right: 1rem; color: var(--film-orange); font-family: 'Courier New'; font-size: 1.5rem; font-weight: bold;}
+
+    </style>
+</head>
+<body>
+
+    <div class="film-strip" id="strip">
+        <div class="edge-code">KODAK PORTRA 400 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 12A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KODAK PORTRA 400 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 13A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KODAK PORTRA 400 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 14A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KODAK PORTRA 400 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 15A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KODAK PORTRA 400 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 16A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KODAK PORTRA 400 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 17A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KODAK PORTRA 400 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 18A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KODAK PORTRA 400 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 19A</div>
+        
+        <!-- FRAME 1 -->
+        <div class="frame">
+            <div class="f-num">12 ❯</div>
+            <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=1200" alt="Cinema">
+            <div class="f-content">
+                <h2 class="f-title">Directorial Debut</h2>
+                <p class="f-desc">A deep dive into analog cinematic production. Scroll horizontally.</p>
+            </div>
+        </div>
+
+        <!-- FRAME 2 -->
+        <div class="frame">
+             <div class="f-num">13 ❯</div>
+            <img src="https://images.unsplash.com/photo-1542204165-65bf26472b9b?auto=format&fit=crop&q=80&w=1200" alt="Lens">
+            <div class="f-content">
+                <h2 class="f-title">Focal Length</h2>
+                <p class="f-desc">Capturing exactly 35mm optical widths across the digital DOM frame.</p>
+            </div>
+        </div>
+
+        <!-- FRAME 3 -->
+        <div class="frame">
+             <div class="f-num">14 ❯</div>
+            <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&q=80&w=1200" alt="Camera">
+            <div class="f-content">
+                <h2 class="f-title">Celluloid</h2>
+                <p class="f-desc">Achieving massive color inversion using webkit backdrop filters and sepia blends.</p>
+            </div>
+        </div>
+        
+        <!-- FRAME 4 -->
+        <div class="frame">
+             <div class="f-num">15 ❯</div>
+            <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&q=80&w=1200" alt="Set">
+            <div class="f-content">
+                <h2 class="f-title">Final Cut</h2>
+                <p class="f-desc">End of the roll. Please rewind safely.</p>
+            </div>
+        </div>
+
+        <div class="edge-code edge-code-bottom">KODAK PORTRA 400 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 12A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KODAK PORTRA 400 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 13A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KODAK PORTRA 400 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 14A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KODAK PORTRA 400 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 15A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KODAK PORTRA 400 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 16A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KODAK PORTRA 400 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 17A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KODAK PORTRA 400 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 18A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KODAK PORTRA 400 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 19A</div>
+    </div>
+
+    <!-- JS Hack to convert vertical mouse wheel scroll to horizontal scroll -->
+    <script>
+        const scrollContainer = document.querySelector('body');
+
+        scrollContainer.addEventListener('wheel', (evt) => {
+            evt.preventDefault();
+            scrollContainer.scrollLeft += evt.deltaY; // Turn Y scroll into X scroll
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #43 - Holographic Glass</title>
+    <!-- Sleek Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #07070a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh;
+            /* Starry background */
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px);
+            background-size: 550px 550px, 350px 350px;
+            background-position: 0 0, 40px 60px;
+        }
+
+        /* 
+          =============================================
+          THE HOLOGRAPHIC CARD
+          =============================================
+        */
+        .glass-card {
+            width: 400px; height: 600px;
+            position: relative;
+            /* Fundamental Glass Setup */
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.0));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.18);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            
+            /* The Iridescent Holographic Overlay applied via before pseud-element */
+            overflow: hidden;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 3rem; text-align: center;
+        }
+
+        /* The Soap Bubble Iridescence */
+        .glass-card::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(
+                circle at center, 
+                transparent 10%, 
+                rgba(255,0,128,0.2) 30%, 
+                rgba(0,255,255,0.2) 50%, 
+                rgba(255,255,0,0.1) 70%, 
+                transparent 90%
+            );
+            /* Make the gradient spin slowly behind the blur */
+            animation: spin 15s linear infinite;
+            z-index: -1; pointer-events: none;
+            mix-blend-mode: color-dodge; /* Essential for holographic effect */
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Floating effect */
+        .wrapper { animation: float 6s ease-in-out infinite; }
+        @keyframes float { 0%, 100%{ transform: translateY(0); } 50%{ transform: translateY(-20px); } }
+
+        /* UI Inside */
+        .card-logo { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, cyan, magenta); display: flex; justify-content: center; align-items: center; font-size: 2rem; margin-bottom: 2rem; box-shadow: 0 0 20px rgba(0,255,255,0.4); border: 2px solid #fff;}
+        .glass-card h2 { font-size: 2rem; font-weight: 600; margin-bottom: 1rem;}
+        .glass-card p { font-size: 1rem; color: #ddd; font-weight: 300; line-height: 1.6; margin-bottom: 3rem;}
+
+        .btn-holo {
+            width: 100%; padding: 15px; border-radius: 20px; font-family: 'Poppins'; font-weight: 600;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            color: #fff; cursor: pointer; transition: 0.3s;
+        }
+        .btn-holo:hover { background: rgba(255,255,255,0.2); box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="glass-card">
+            <div class="card-logo">UI</div>
+            <h2>Prismatic Shell</h2>
+            <p>Achieving structural iridescence. Utilizing radial-gradient layers under heavy backdrop-filters to simulate light refracting through glass.</p>
+            <button class="btn-holo">Initialize</button>
+        </div>
+    </div>
+
+</body>
+</html>

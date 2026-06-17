@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #48 - Magnetic Type</title>
+    <!-- Heavy geometric sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #ececec;
+            --txt: #111;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--txt);
+            /* 'Clash Display' uses local generic fallback if font CDN fails, works well for massive impact */
+            font-family: 'Clash Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        /* 
+          =============================================
+          MAGNETIC LETTERS
+          =============================================
+        */
+        .magnetic-wrap {
+            display: flex; flex-wrap: wrap; justify-content: center;
+            max-width: 90vw; user-select: none;
+        }
+
+        .letter {
+            font-size: clamp(5rem, 15vw, 15rem);
+            font-weight: 700;
+            line-height: 0.8;
+            text-transform: uppercase;
+            display: inline-block;
+            transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+        }
+
+        .instructions {
+            position: fixed; bottom: 5vh; font-family: monospace; font-size: 1rem; color: #888; text-transform: uppercase;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Break text into individual spans for JS targeting -->
+    <div class="magnetic-wrap" id="wrap">
+        <span class="letter">R</span>
+        <span class="letter">E</span>
+        <span class="letter">P</span>
+        <span class="letter">E</span>
+        <span class="letter">L</span>
+        <div style="width: 100%;"></div>
+        <span class="letter">M</span>
+        <span class="letter">O</span>
+        <span class="letter">U</span>
+        <span class="letter">S</span>
+        <span class="letter">E</span>
+    </div>
+
+    <div class="instructions">S W I P E &nbsp; T H R O U G H</div>
+
+    <!-- The Javascript that pushes letters away from the cursor -->
+    <script>
+        const letters = document.querySelectorAll('.letter');
+        const triggerDistance = 150; // Distance in px before letter reacts
+
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+
+            letters.forEach(letter => {
+                const rect = letter.getBoundingClientRect();
+                const letterX = rect.left + rect.width / 2;
+                const letterY = rect.top + rect.height / 2;
+
+                // Calculate distance between mouse and center of letter
+                const distX = mouseX - letterX;
+                const distY = mouseY - letterY;
+                const distance = Math.sqrt(distX * distX + distY * distY);
+
+                if (distance < triggerDistance) {
+                    // Push away
+                    const pushForce = (triggerDistance - distance) / triggerDistance; // 0 to 1
+                    // The closer mouse is, the further it pushes
+                    const pX = -(distX / distance) * pushForce * 100; // max push 100px
+                    const pY = -(distY / distance) * pushForce * 100;
+                    
+                    letter.style.transform = `translate(${pX}px, ${pY}px) scale(1.1)`;
+                    letter.style.color = '#ff0055'; // Flash red when repulsed
+                } else {
+                    // Snap back to original position
+                    letter.style.transform = `translate(0px, 0px) scale(1)`;
+                    letter.style.color = '#111';
+                }
+            });
+        });
+
+        // Also snap back when mouse leaves screen entirely
+        document.addEventListener('mouseleave', () => {
+             letters.forEach(letter => {
+                 letter.style.transform = `translate(0px, 0px) scale(1)`;
+                 letter.style.color = '#111';
+             });
+        });
+    </script>
+</body>
+</html>

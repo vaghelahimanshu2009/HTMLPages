@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #10 - Cinematic Split Screen</title>
+    <!-- Cinematic Serif + Clean Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,800;1,6..96,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #0d0d0d;
+            --text-light: #f5f5f5;
+            --accent-gold: #c5a880;
+            --split-width: 45vw;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-light);
+            font-family: 'Lato', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .serif { font-family: 'Bodoni Moda', serif; }
+
+        /* 
+          =============================================
+          LEFT FIXED IMAGE WING
+          =============================================
+        */
+        .fixed-wing {
+            position: fixed;
+            top: 0; left: 0; width: var(--split-width); height: 100vh;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .fixed-wing img {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: contrast(110%) brightness(0.8);
+        }
+
+        .wing-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to right, transparent 80%, var(--bg) 100%);
+        }
+
+        .wing-content {
+            position: absolute;
+            bottom: 3rem; left: 3rem;
+        }
+
+        .wing-logo { font-size: 2.5rem; letter-spacing: 2px; color: var(--accent-gold); }
+
+        /* 
+          =============================================
+          RIGHT SCROLLING CONTENT
+          =============================================
+        */
+        .scroll-wing {
+            margin-left: var(--split-width);
+            width: calc(100vw - var(--split-width));
+            background: var(--bg);
+            position: relative;
+            z-index: 5;
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 8rem 6rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* 
+          =============================================
+          FOLD 1: INTRO
+          =============================================
+        */
+        .intro h1 {
+            font-size: clamp(3rem, 5vw, 6rem);
+            line-height: 1.1; margin-bottom: 2rem; font-weight: 800;
+        }
+        .intro h1 i { color: var(--accent-gold); font-style: italic; }
+        .intro p {
+            font-size: 1.2rem; line-height: 1.8; color: #aaa; max-width: 500px; font-weight: 300;
+        }
+
+        /* 
+          =============================================
+          FOLD 2: EDITORIAL
+          =============================================
+        */
+        .editorial h2 { font-size: 3rem; margin-bottom: 3rem; color: var(--accent-gold); }
+        .edit-block {
+            display: flex; gap: 2rem; margin-bottom: 4rem; align-items: top;
+        }
+        .e-num { font-size: 2rem; color: #555; font-family: 'Bodoni Moda'; }
+        .e-text h3 { font-size: 1.8rem; margin-bottom: 1rem; }
+        .e-text p { color: #888; line-height: 1.7; font-size: 1rem; }
+
+        /* 
+          =============================================
+          FOLD 3: GALLERY STACK
+          =============================================
+        */
+        .gal-stack { padding: 4rem 6rem; }
+        .stack-item { width: 100%; aspect-ratio: 16/9; background: #222; margin-bottom: 4rem; overflow: hidden; position: relative;}
+        .stack-item img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(80%); transition: 0.5s; }
+        .stack-item:hover img { filter: grayscale(0%); transform: scale(1.05);}
+        .stack-item h3 { position: absolute; bottom: 2rem; left: 2rem; font-size: 2rem; text-shadow: 0 4px 10px #000; z-index: 2;}
+
+        /* 
+          =============================================
+          FOLD 4: A QUOTE
+          =============================================
+        */
+        .quote-sec { text-align: center; }
+        .quote-sec h2 { font-size: clamp(2.5rem, 4vw, 4rem); line-height: 1.3; font-style: italic; font-weight: 400; margin-bottom: 2rem;}
+        .quote-sec span { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent-gold); }
+
+        /* 
+          =============================================
+          FOLD 5: FOOTER
+          =============================================
+        */
+        footer { padding: 6rem; }
+        footer h2 { font-size: 4rem; margin-bottom: 2rem;}
+        .f-form input {
+            width: 100%; background: transparent; border: none; border-bottom: 1px solid #555;
+            padding: 1rem 0; color: #fff; font-size: 1.2rem; font-family: 'Lato'; margin-bottom: 2rem; outline: none;
+        }
+        .f-form input:focus { border-color: var(--accent-gold); }
+        .btn { padding: 1rem 3rem; background: var(--accent-gold); color: #000; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; display: inline-block;}
+
+        /* Responsive Break */
+        @media (max-width: 1024px) {
+            :root { --split-width: 0vw; }
+            .fixed-wing { position: relative; width: 100vw; height: 60vh; }
+            .scroll-wing { margin-left: 0; width: 100vw; }
+            .wing-overlay { background: linear-gradient(to bottom, transparent 60%, var(--bg) 100%); }
+            section { padding: 5rem 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LEFT FIXED WING -->
+    <div class="fixed-wing">
+        <img src="file:///C:/Users/Himanshu/.gemini/antigravity/brain/c7bee168-9405-4880-b150-9f22b2890e72/cinematic_split_1775795841087.png" alt="Cinematic Portrait">
+        <div class="wing-overlay"></div>
+        <div class="wing-content">
+            <div class="wing-logo">V O G U E</div>
+            <div style="margin-top: 10px; font-size: 0.8rem; letter-spacing: 2px;">DIGITAL EDITORIAL</div>
+        </div>
+    </div>
+
+    <!-- RIGHT SCROLLING WING -->
+    <div class="scroll-wing">
+        
+        <!-- Fold 1 -->
+        <section class="intro">
+            <h1>The Art of <br><i>Cinematography</i></h1>
+            <p>Elevating digital interfaces with editorial precision. We frame every pixel as if it were shot on 35mm film, bringing high-fashion aesthetics to the modern web.</p>
+        </section>
+
+        <!-- Fold 2 -->
+        <section class="editorial">
+            <h2>Chapters</h2>
+            <div class="edit-block">
+                <div class="e-num">01</div>
+                <div class="e-text">
+                    <h3>Lighting & Shadow</h3>
+                    <p>Contrast is the foundation of drama. By mastering the interplay between pure black (#000000) and directed highlights, we craft depth without relying on faux 3D shadows.</p>
+                </div>
+            </div>
+            <div class="edit-block">
+                <div class="e-num">02</div>
+                <div class="e-text">
+                    <h3>Typographic Hierarchy</h3>
+                    <p>Serif fonts carry centuries of tradition. We pair classical proportions with rigorous modern grid structures to achieve perfect readability.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fold 3 -->
+        <section class="gal-stack">
+            <div class="stack-item">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=1000" alt="Model">
+                <h3>Visions</h3>
+            </div>
+            <div class="stack-item">
+                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=1000" alt="Male Model">
+                <h3>Silhouettes</h3>
+            </div>
+        </section>
+
+        <!-- Fold 4 -->
+        <section class="quote-sec">
+            <h2>"A photograph is a secret about a secret. The more it tells you the less you know."</h2>
+            <span>— Diane Arbus</span>
+        </section>
+
+        <!-- Fold 5 -->
+        <footer>
+            <h2>Subscribe.</h2>
+            <p style="color: #888; margin-bottom: 3rem;">Receive exclusive digital editorials directly.</p>
+            <form class="f-form">
+                <input type="email" placeholder="Email Address">
+                <a href="#" class="btn">Submit</a>
+            </form>
+        </footer>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,253 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #14 - Retro OS</title>
+    <!-- Pixel Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=Pixelify+Sans:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-teal: #008080;
+            --win-bg: #c0c0c0;
+            --win-border-light: #ffffff;
+            --win-border-dark: #808080;
+            --win-border-darker: #000000;
+            --win-blue: #000080;
+            --text: #000000;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: default; }
+
+        body {
+            background-color: var(--bg-teal);
+            color: var(--text);
+            font-family: 'Pixelify Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* 
+          =============================================
+          WINDOWS 95 UI CLASSES
+          =============================================
+        */
+        .window {
+            background: var(--win-bg);
+            border-top: 2px solid var(--win-border-light);
+            border-left: 2px solid var(--win-border-light);
+            border-right: 2px solid var(--win-border-darker);
+            border-bottom: 2px solid var(--win-border-darker);
+            box-shadow: inset -1px -1px 0px var(--win-border-dark), inset 1px 1px 0px var(--win-bg);
+            padding: 3px;
+        }
+
+        .title-bar {
+            background: var(--win-blue);
+            color: #fff;
+            padding: 4px 6px;
+            font-size: 1rem;
+            display: flex; justify-content: space-between; align-items: center;
+            font-family: 'Chakra Petch', sans-serif; font-weight: 700;
+        }
+
+        .title-buttons { display: flex; gap: 3px; }
+        
+        .btn {
+            background: var(--win-bg);
+            border-top: 2px solid var(--win-border-light);
+            border-left: 2px solid var(--win-border-light);
+            border-right: 2px solid var(--win-border-darker);
+            border-bottom: 2px solid var(--win-border-darker);
+            color: var(--text); font-weight: 700; font-family: 'Pixelify Sans';
+            padding: 2px 6px; font-size: 0.8rem; cursor: pointer; text-decoration: none;
+        }
+        .btn:active {
+            border-top: 2px solid var(--win-border-darker);
+            border-left: 2px solid var(--win-border-darker);
+            border-right: 2px solid var(--win-border-light);
+            border-bottom: 2px solid var(--win-border-light);
+        }
+
+        .window-content { padding: 1rem; border: 2px solid var(--win-border-darker); border-right-color: var(--win-border-light); border-bottom-color: var(--win-border-light); background: #fff;}
+
+        /* Typography */
+        h1, h2 { font-family: 'Pixelify Sans'; margin-bottom: 1rem; font-size: 3rem;}
+        p { font-size: 1.2rem; line-height: 1.5; margin-bottom: 1rem; font-family: 'Chakra Petch', sans-serif;}
+
+        /* 
+          =============================================
+          LAYOUT & FOLDS
+          =============================================
+        */
+        section { min-height: 100vh; padding: 4rem 5vw; display: flex; flex-direction: column; justify-content: center; position: relative;}
+
+        /* Desktop specific items (fixed) */
+        .icon { width: 80px; text-align: center; color: white; display: flex; flex-direction: column; align-items: center; margin: 20px; font-size: 0.9rem;}
+        .icon-img { width: 50px; height: 50px; background: url('file:///C:/Users/Himanshu/.gemini/antigravity/brain/c7bee168-9405-4880-b150-9f22b2890e72/retro_pixel_os_1775796559584.png') no-repeat center; background-size: cover; border: 2px solid dotted; image-rendering: pixelated;}
+
+        /* Fold 1: Hero (Welcome Window) */
+        .hero-window { max-width: 800px; margin: 0 auto; box-shadow: 10px 10px 0 rgba(0,0,0,0.5);}
+        .hero-content { display: flex; gap: 2rem; background: var(--win-bg); }
+        .hero-img { width: 200px; height: 200px; border-top: 2px solid var(--win-border-darker); border-left: 2px solid var(--win-border-darker); border-bottom: 2px solid var(--win-border-light); border-right: 2px solid var(--win-border-light); overflow: hidden;}
+        .hero-img img { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; }
+
+        /* Fold 2: About / Tabbed Interface */
+        .tabs { display: flex; gap: 2px; transform: translateY(3px); }
+        .tab { background: var(--win-bg); padding: 5px 15px; border-top: 2px solid var(--win-border-light); border-left: 2px solid var(--win-border-light); border-right: 2px solid var(--win-border-darker); cursor: pointer;}
+        .tab.active { padding-bottom: 8px; border-bottom: 2px solid var(--win-bg); z-index: 10; position: relative; }
+
+        /* Fold 3: MS Paint Style Gallery */
+        .paint-toolbar { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 1rem; padding: 5px; background: var(--win-bg); border-top: 2px solid var(--win-border-darker); border-left: 2px solid var(--win-border-darker); border-bottom: 2px solid var(--win-border-light); border-right: 2px solid var(--win-border-light);}
+        .paint-tool { width: 40px; height: 40px; background: var(--win-bg); border: 2px solid var(--win-border-light); border-right-color: var(--win-border-darker); border-bottom-color: var(--win-border-darker); display:flex; justify-content:center; align-items:center; cursor: pointer; }
+        .color-palette { display: flex; gap: 2px; }
+        .color-box { width: 20px; height: 20px; border: 1px solid inset; }
+
+        .canvas { width: 100%; height: 400px; background: #fff; border: 2px solid var(--win-border-darker); border-right-color: var(--win-border-light); border-bottom-color: var(--win-border-light); position: relative; overflow: hidden; background-image: repeating-linear-gradient(#ccc 0 1px, transparent 1px 100%), repeating-linear-gradient(90deg, #ccc 0 1px, transparent 1px 100%); background-size: 20px 20px;}
+
+        /* Fold 4: Warning Dialogs */
+        .warn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .warn-window { position: relative; transform: rotate(-2deg); }
+        .warn-window:nth-child(2) { transform: rotate(1deg); top: 50px; }
+
+        /* Fold 5: Taskbar */
+        .taskbar { position: fixed; bottom: 0; left: 0; width: 100%; height: 40px; background: var(--win-bg); border-top: 2px solid var(--win-border-light); display: flex; align-items: center; padding: 2px; z-index: 999; }
+        .start-btn { display: flex; align-items: center; gap: 5px; padding: 2px 10px; height: 100%; font-weight: 900; }
+        .start-logo { font-size: 1.2rem; color: #000; }
+        .time { margin-left: auto; padding: 2px 10px; border-top: 2px solid var(--win-border-darker); border-left: 2px solid var(--win-border-darker); border-bottom: 2px solid var(--win-border-light); border-right: 2px solid var(--win-border-light); font-family: 'Chakra Petch'; }
+
+    </style>
+</head>
+<body>
+
+    <!-- OS Desktop BG Icons -->
+    <div style="position:fixed; top:20px; left:20px; z-index:0;">
+        <div class="icon"><div class="icon-img"></div><span>My Computer</span></div>
+        <div class="icon"><div class="icon-img" style="filter: hue-rotate(180deg);"></div><span>Network</span></div>
+        <div class="icon"><div class="icon-img" style="filter: invert(1);"></div><span>Trash</span></div>
+    </div>
+
+    <!-- FOLD 1: HERO -->
+    <section>
+        <div class="window hero-window" style="z-index: 10;">
+            <div class="title-bar">
+                <span>Welcome.exe</span>
+                <div class="title-buttons"><button class="btn">_</button><button class="btn">□</button><button class="btn">X</button></div>
+            </div>
+            <div class="window-content hero-content">
+                <div class="hero-img">
+                    <img src="file:///C:/Users/Himanshu/.gemini/antigravity/brain/c7bee168-9405-4880-b150-9f22b2890e72/retro_pixel_os_1775796559584.png" alt="90s pixel art">
+                </div>
+                <div>
+                    <h1>RETRO//OS <br>SYSTEM 2026</h1>
+                    <p>Experience the web like it's 1995. Low fidelity graphics, high fidelity coding. We build brutalist interfaces masked as pure nostalgia.</p>
+                    <button class="btn" style="font-size: 1.2rem; padding: 10px 30px;">[ OK ]</button>
+                    <button class="btn" style="font-size: 1.2rem; padding: 10px 20px;">[ CANCEL ]</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOLD 2: TABS / SPECS -->
+    <section>
+        <div class="window hero-window" style="z-index: 10;">
+            <div class="title-bar">
+                <span>System_Properties</span>
+                <button class="btn">X</button>
+            </div>
+            <div style="padding: 10px; background: var(--win-bg);">
+                <div class="tabs">
+                    <div class="tab active">General</div>
+                    <div class="tab">Performance</div>
+                    <div class="tab">Hardware</div>
+                </div>
+                <div class="window-content" style="height: 300px;">
+                    <h2>System:</h2>
+                    <p>OS Version 26.04<br>Licensed to: Awards Visitor</p>
+                    <h2>Computer:</h2>
+                    <p>Genuine Intel(R) Pixel Processor<br>64.0 MB RAM<br>Super VGA Resolution</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOLD 3: PAINT GALLERY -->
+    <section>
+        <div class="window hero-window" style="z-index: 10; max-width: 90vw;">
+            <div class="title-bar">
+                <span>Portfolio - Paint</span>
+                <div class="title-buttons"><button class="btn">_</button><button class="btn">□</button><button class="btn">X</button></div>
+            </div>
+            <div style="padding: 10px; background: var(--win-bg);">
+                <div class="paint-toolbar">
+                    <div class="paint-tool">✏️</div>
+                    <div class="paint-tool">🪣</div>
+                    <div class="paint-tool">A</div>
+                    <div class="paint-tool">🔍</div>
+                    <div class="color-palette">
+                        <div class="color-box" style="background:#ff0000;"></div>
+                        <div class="color-box" style="background:#00ff00;"></div>
+                        <div class="color-box" style="background:#0000ff;"></div>
+                        <div class="color-box" style="background:#ffff00;"></div>
+                        <div class="color-box" style="background:#ff00ff;"></div>
+                    </div>
+                </div>
+                <div class="canvas">
+                    <img src="file:///C:/Users/Himanshu/.gemini/antigravity/brain/c7bee168-9405-4880-b150-9f22b2890e72/retro_pixel_os_1775796559584.png" style="width:50%; position:absolute; top: 10%; left:25%; border: 2px dashed #000;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOLD 4: POPUPS -->
+    <section>
+        <div class="warn-grid">
+            <div class="window warn-window">
+                <div class="title-bar"><span>Warning</span><button class="btn">X</button></div>
+                <div class="window-content" style="background: var(--win-bg);">
+                    <div style="display:flex; gap: 20px; align-items:center;">
+                        <h1 style="color: yellow; text-shadow: 2px 2px 0 #000; font-size:4rem;">!</h1>
+                        <p>Illegal operation recorded. Your aesthetic choices are too modern and have been terminated.</p>
+                    </div>
+                    <div style="text-align:center; mt: 20px;"><button class="btn">Ignore</button></div>
+                </div>
+            </div>
+            <div class="window warn-window">
+                <div class="title-bar" style="background: red;"><span>Error 404</span><button class="btn">X</button></div>
+                <div class="window-content" style="background: var(--win-bg);">
+                    <div style="display:flex; gap: 20px; align-items:center;">
+                        <h1 style="color: red; font-size:4rem;">X</h1>
+                        <p>File 'boring_website.html' not found.</p>
+                    </div>
+                    <div style="text-align:center; mt: 20px;"><button class="btn">OK</button></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOLD 5: NO FOLD, END SPACING -->
+    <section style="min-height: 20vh;"></section>
+
+    <!-- TASKBAR -->
+    <div class="taskbar">
+        <button class="btn start-btn">
+            <span class="start-logo">⊞</span> Start
+        </button>
+        <div style="width: 2px; height: 80%; background: var(--win-border-darker); margin: 0 10px;"></div>
+        <div style="width: 2px; height: 80%; background: var(--win-border-light); margin: 0 10px; margin-left: -10px;"></div>
+        
+        <button class="btn" style="border-top-color: var(--win-border-darker); border-left-color: var(--win-border-darker); border-bottom-color: var(--win-border-light); border-right-color: var(--win-border-light); background: #eee;">
+            Welcome.exe
+        </button>
+
+        <div class="time" id="clock">10:15 AM</div>
+    </div>
+
+    <script>
+        setInterval(() => {
+            const d = new Date();
+            document.getElementById('clock').innerText = d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }, 1000);
+    </script>
+</body>
+</html>

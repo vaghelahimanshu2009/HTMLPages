@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #6 - Soft Botanical</title>
+    <!-- Elegant Serif and Geometric Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #f9f8f4; /* creamy white */
+            --text-dark: #3a4034;
+            --accent-green: #899c85;
+            --accent-light: #d1d9cc;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-dark);
+            font-family: 'Jost', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, .serif {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 400;
+        }
+
+        /* 
+          =============================================
+          NAVIGATION
+          =============================================
+        */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 2rem 5vw; display: flex; justify-content: space-between; align-items: center; z-index: 100;
+            background: linear-gradient(to bottom, var(--bg) 50%, transparent);
+        }
+
+        .logo { font-size: 2rem; color: var(--text-dark); text-decoration: none; letter-spacing: 2px; }
+        
+        .nav-links { display: flex; gap: 3rem; }
+        .nav-links a { color: var(--text-dark); text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 1px; background: var(--text-dark); transition: width 0.4s ease; }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* 
+          =============================================
+          GLOBAL SECTIONS
+          =============================================
+        */
+        section { min-height: 100vh; padding: 8rem 5vw; display: flex; align-items: center; position: relative; }
+        
+        .fade-in { opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1); }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* Fold 1: Hero */
+        .hero { justify-content: center; text-align: center; flex-direction: column; }
+        .hero-title { font-size: clamp(4rem, 10vw, 9rem); line-height: 0.9; margin-bottom: 2rem; color: var(--accent-green); position: relative; z-index: 2;}
+        .hero-title i { font-style: italic; color: var(--text-dark); }
+        
+        .hero-img {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 30vw; height: 75vh; border-radius: 200px; /* Pill shape */
+            overflow: hidden; z-index: 1; opacity: 0.3;
+        }
+        .hero-img img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Fold 2: About / Intro */
+        .about { flex-direction: column; justify-content: center; text-align: center; background: #fff; border-radius: 50px 50px 0 0; }
+        .about-text { font-size: clamp(2rem, 4vw, 3.5rem); max-width: 80%; line-height: 1.4; color: var(--text-dark); }
+        
+        /* Fold 3: Services Grid */
+        .services { display: block; padding-top: 10rem;}
+        .service-list { border-top: 1px solid var(--accent-light); }
+        .s-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 4rem 0; border-bottom: 1px solid var(--accent-light);
+            cursor: pointer; transition: padding 0.5s ease;
+        }
+        .s-item:hover { padding: 5rem 2rem; background: var(--accent-green); color: #fff;}
+        .s-num { font-size: 1.5rem; width: 10%; }
+        .s-name { font-size: 4rem; width: 50%; font-family: 'Cormorant Garamond'; }
+        .s-desc { width: 30%; font-size: 1.1rem; line-height: 1.6; }
+
+        /* Fold 4: Showcase Image Split */
+        .showcase { padding: 0; min-height: 80vh; background: var(--accent-light); }
+        .showcase-content { display: flex; width: 100%; }
+        .sc-left { flex: 1; padding: 5vw; display: flex; flex-direction: column; justify-content: center; }
+        .sc-right { flex: 1; position: relative; overflow: hidden; }
+        .sc-right img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Fold 5: Footer */
+        footer { padding: 10rem 5vw; text-align: center; background: var(--bg); }
+        .big-cta { font-size: clamp(4rem, 8vw, 8rem); font-family: 'Cormorant Garamond'; color: var(--accent-green); text-decoration: none; display: inline-block; margin-bottom: 4rem; transition: opacity 0.3s; }
+        .big-cta:hover { opacity: 0.6; }
+        .footer-info { display: flex; justify-content: space-between; font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; border-top: 1px solid var(--accent-light); padding-top: 2rem;}
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo serif">Aura.</a>
+        <div class="nav-links">
+            <a href="#">Studio</a>
+            <a href="#">Botanics</a>
+            <a href="#">Journal</a>
+        </div>
+    </nav>
+
+    <!-- Fold 1: Hero -->
+    <section class="hero">
+        <div class="hero-img">
+            <img src="file:///C:/Users/Himanshu/.gemini/antigravity/brain/c7bee168-9405-4880-b150-9f22b2890e72/soft_botanical_1775795684188.png" alt="Botanical">
+        </div>
+        <h1 class="hero-title fade-in">
+            Organic <i>&</i> <br> Timeless.
+        </h1>
+        <p class="fade-in" style="margin-top: 2rem; font-size: 1.2rem; max-width: 400px; z-index:2; letter-spacing:1px; line-height:1.6;">Cultivating beautiful digital ecosystems inspired by nature's quiet geometry.</p>
+    </section>
+
+    <!-- Fold 2: About -->
+    <section class="about">
+        <h2 class="about-text serif fade-in">
+            "Design is the silent ambassador of your brand. We weave elegance, simplicity, and nature into experiences that breathe."
+        </h2>
+    </section>
+
+    <!-- Fold 3: Services -->
+    <section class="services">
+        <h2 class="serif fade-in" style="font-size: 4rem; margin-bottom: 4rem;">Our Disciplines</h2>
+        <div class="service-list">
+            <div class="s-item fade-in">
+                <span class="s-num">01.</span>
+                <span class="s-name">Brand Essence</span>
+                <span class="s-desc">Distilling your core identity into pure, resonant visual aesthetics.</span>
+            </div>
+            <div class="s-item fade-in">
+                <span class="s-num">02.</span>
+                <span class="s-name">Digital Flora</span>
+                <span class="s-desc">Creating websites that feel alive, intuitive, and seamlessly organic.</span>
+            </div>
+            <div class="s-item fade-in">
+                <span class="s-num">03.</span>
+                <span class="s-name">Art Direction</span>
+                <span class="s-desc">Curating photography and styling that brings softness to screens.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fold 4: Showcase -->
+    <section class="showcase">
+        <div class="showcase-content">
+            <div class="sc-left fade-in">
+                <h2 class="serif" style="font-size: 5rem; margin-bottom: 1rem;">Oasis</h2>
+                <p style="font-size: 1.2rem; line-height: 1.8;">A case study on redefining digital wellness through calm color palettes and slow, deliberate typography transitions.</p>
+            </div>
+            <div class="sc-right">
+                <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&q=80&w=1000" alt="Plant">
+            </div>
+        </div>
+    </section>
+
+    <!-- Fold 5: Footer -->
+    <footer>
+        <div class="fade-in">
+            <p style="font-size: 1.2rem; margin-bottom: 1rem; text-transform: uppercase;">Begin a project</p>
+            <a href="#" class="big-cta">hello@aura.studio</a>
+        </div>
+        <div class="footer-info fade-in">
+            <span>© 2026 Aura Studio</span>
+            <span>Paris — London — Kyoto</span>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

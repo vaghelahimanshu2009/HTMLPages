@@ -1,0 +1,259 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #8 - Glass & Liquid</title>
+    <!-- Modern Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-blur: blur(25px);
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --accent: #5e60ce;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #0b090a;
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* 
+          =============================================
+          LIQUID BACKGROUND
+          =============================================
+        */
+        .liquid-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: url('file:///C:/Users/Himanshu/.gemini/antigravity/brain/c7bee168-9405-4880-b150-9f22b2890e72/liquid_colors_1775795808805.png');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            /* Animation to make it feel fluid */
+            animation: breathe 30s infinite alternate ease-in-out;
+            transform-origin: center;
+        }
+
+        @keyframes breathe {
+            0% { transform: scale(1) rotate(0deg); filter: hue-rotate(0deg); }
+            100% { transform: scale(1.2) rotate(5deg); filter: hue-rotate(30deg); }
+        }
+
+        /* 
+          =============================================
+          GLOBAL GLASS ELEMENTS
+          =============================================
+        */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 8rem 5vw;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        /* 
+          =============================================
+          NAVIGATION
+          =============================================
+        */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 1.5rem 5vw; z-index: 100;
+        }
+        .nav-inner {
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; border-radius: 50px;
+        }
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; }
+        .nav-links a { color: var(--text-main); text-decoration: none; margin-left: 2rem; font-weight: 600; font-size: 0.9rem;}
+
+        /* 
+          =============================================
+          FOLD 1: HERO
+          =============================================
+        */
+        .hero { justify-content: center; text-align: center; }
+        .hero-card {
+            padding: 5rem 3rem;
+            width: 100%; max-width: 800px;
+            animation: float-card 6s infinite ease-in-out;
+        }
+        @keyframes float-card {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero h1 {
+            font-size: clamp(4rem, 8vw, 6rem);
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.4) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 500px; margin: 0 auto 3rem auto; line-height: 1.6;}
+        
+        .btn {
+            display: inline-block; padding: 1rem 3rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50px; color: #fff; text-decoration: none; font-weight: 600; backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .btn:hover { background: #fff; color: #000; }
+
+        /* 
+          =============================================
+          FOLD 2: HORIZONTAL GLASSS CARDS
+          =============================================
+        */
+        .features { display: flex; flex-direction: column; justify-content: center; }
+        .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 4rem;}
+        .f-card {
+            padding: 3rem; text-align: left; transition: transform 0.4s ease;
+        }
+        .f-card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.1); }
+        .f-card h3 { font-size: 2rem; margin-bottom: 1rem; }
+        .f-card p { color: var(--text-muted); line-height: 1.6;}
+
+        /* 
+          =============================================
+          FOLD 3: MASKED STATS
+          =============================================
+        */
+        .stats { justify-content: space-around; flex-wrap: wrap;}
+        .stat-item {
+            width: 25vw; height: 25vw; min-width: 250px; min-height: 250px;
+            border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+        }
+        .stat-item h2 { font-size: 5rem; font-weight: 800; margin-bottom: 0.5rem;}
+        .stat-item span { font-size: 1rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 2px;}
+
+        /* 
+          =============================================
+          FOLD 4: FULL WIDTH TESTIMONIAL
+          =============================================
+        */
+        .testimonial { padding: 10vw; }
+        .test-box { width: 100%; padding: 6rem; text-align: center; border-radius: 40px; }
+        .test-box p { font-size: 3rem; font-weight: 300; line-height: 1.4; margin-bottom: 3rem; }
+        .author { font-weight: 800; font-size: 1.2rem; }
+
+        /* 
+          =============================================
+          FOLD 5: FOOTER
+          =============================================
+        */
+        footer { padding: 5vw; display: flex; justify-content: center;}
+        .footer-card { width: 100%; padding: 4rem; display: flex; justify-content: space-between; align-items: center; border-radius: 30px;}
+        .f-left h2 { font-size: 3rem; margin-bottom: 1rem; }
+        .f-right { display: flex; gap: 2rem; }
+
+        @media (max-width: 768px) {
+            .feature-grid { grid-template-columns: 1fr; }
+            .hero-card { padding: 3rem 1.5rem; }
+            .test-box { padding: 3rem; }
+            .test-box p { font-size: 1.8rem; }
+            .footer-card { flex-direction: column; text-align: center; gap: 2rem; }
+            .nav-outer { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="liquid-bg"></div>
+
+    <nav class="nav-outer">
+        <div class="nav-inner glass-card">
+            <div class="logo">LUX.</div>
+            <div class="nav-links">
+                <a href="#">Vision</a>
+                <a href="#">Works</a>
+                <a href="#">Connect</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- FOLD 1: Hero -->
+    <section class="hero">
+        <div class="hero-card glass-card">
+            <h1>Fluid Reality.</h1>
+            <p>We craft digital experiences that melt boundaries. Leveraging glassmorphism to seamlessly blend interfaces with artistic fluidity.</p>
+            <a href="#" class="btn">Explore Lab</a>
+        </div>
+    </section>
+
+    <!-- FOLD 2: Features -->
+    <section class="features">
+        <h2 style="font-size: 4rem; text-align:center;">Core Modules</h2>
+        <div class="feature-grid">
+            <div class="f-card glass-card">
+                <h3>Transparency</h3>
+                <p>UIs that dont block the view, but enhance it through computational blurs and refractions.</p>
+            </div>
+            <div class="f-card glass-card">
+                <h3>Depth</h3>
+                <p>Creating spatial awareness in 2D plains using advanced layering techniques.</p>
+            </div>
+            <div class="f-card glass-card">
+                <h3>Fluidity</h3>
+                <p>Animations that mimic physics. Smooth, organic, and entirely immersive transitions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOLD 3: Circular Stats -->
+    <section class="stats">
+        <div class="stat-item glass-card">
+            <h2>98%</h2><span>Retention</span>
+        </div>
+        <div class="stat-item glass-card" style="transform: translateY(50px);">
+            <h2>1.2s</h2><span>Load Time</span>
+        </div>
+        <div class="stat-item glass-card">
+            <h2>A+</h2><span>Awards</span>
+        </div>
+    </section>
+
+    <!-- FOLD 4: Testimonial -->
+    <section class="testimonial">
+        <div class="test-box glass-card">
+            <p>"An absolute masterpiece of modern web design. The interface doesn't feel built; it feels grown."</p>
+            <div class="author">Director, Creative Arts</div>
+        </div>
+    </section>
+
+    <!-- FOLD 5: Footer -->
+    <footer>
+        <div class="footer-card glass-card">
+            <div class="f-left">
+                <h2>Ready to melt boundaries?</h2>
+                <span style="color: var(--text-muted);">Contact us today.</span>
+            </div>
+            <div class="f-right">
+                <a href="#" class="btn">Dribbble</a>
+                <a href="#" class="btn">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

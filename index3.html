@@ -1,0 +1,344 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #3 - Horizontal Journey</title>
+    <!-- Modern Tech Sans CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;500;800&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-deep: #030508;
+            --text-light: #e0e5ff;
+            --accent-glow: #00f3ff;
+            --accent-dark: #005aff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scrollbar-width: none; /* Hide scrollbar for Horizontal */
+        }
+        *::-webkit-scrollbar { display: none; }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-light);
+            font-family: 'Manrope', sans-serif;
+            overflow: hidden; /* We hijack scroll */
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* 
+          =============================================
+          HORIZONTAL SCROLL WRAPPER
+          =============================================
+        */
+        .scroll-container {
+            display: flex;
+            width: 500vw; /* 5 Folds * 100vw */
+            height: 100vh;
+            /* Using JS to translate this X */
+            transform: translateX(0);
+            will-change: transform;
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .fold {
+            width: 100vw;
+            height: 100vh;
+            flex-shrink: 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 5vw;
+        }
+
+        /* Global Parallax Background Image */
+        .parallax-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 120vw; /* slightly wider for parallax */
+            height: 100vh;
+            z-index: -1;
+            /* Overlay gradient to keep text readable */
+            background: linear-gradient(to right, rgba(3,5,8,0.9), rgba(3,5,8,0.5), rgba(3,5,8,0.9)), 
+                        url('file:///C:/Users/Himanshu/.gemini/antigravity/brain/c7bee168-9405-4880-b150-9f22b2890e72/ocean_parallax_1775795413459.png');
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: transform;
+        }
+
+        /* Ambient Glowing Orbs */
+        .glow-orb {
+            position: absolute;
+            width: 40vw;
+            height: 40vw;
+            background: var(--accent-glow);
+            filter: blur(150px);
+            border-radius: 50%;
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Syncopate', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .title-massive {
+            font-size: clamp(3rem, 8vw, 10rem);
+            font-weight: 700;
+            line-height: 1.1;
+            text-shadow: 0 0 40px rgba(0, 243, 255, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            max-width: 600px;
+            letter-spacing: 1px;
+            color: rgba(224, 229, 255, 0.7);
+        }
+
+        /* 
+          =============================================
+          NAVIGATION / PROGRESS INDICATOR
+          =============================================
+        */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 3rem 5vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            pointer-events: none; /* Let clicks pass to canvas if any */
+        }
+
+        .logo {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            text-decoration: none;
+            letter-spacing: 4px;
+            pointer-events: auto;
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 3rem;
+            left: 5vw;
+            width: 90vw;
+            height: 2px;
+            background: rgba(255,255,255,0.1);
+            z-index: 100;
+        }
+
+        .progress-indicator {
+            height: 100%;
+            width: 0%;
+            background: var(--accent-glow);
+            box-shadow: 0 0 10px var(--accent-glow);
+            transition: width 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* 
+          =============================================
+          FOLD SPECIFICS
+          =============================================
+        */
+        /* Fold 1: Hero */
+        .fold-1 .content-wrap { text-align: left; width: 100%; padding-top: 10vh; }
+        .fold-1 .title-massive span { color: transparent; -webkit-text-stroke: 1px var(--text-light); }
+
+        /* Fold 2: Vertical List disguised as Horizontal */
+        .fold-2 .services-list {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            width: 100%;
+        }
+        .sv-item {
+            display: flex;
+            align-items: baseline;
+            gap: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 2rem;
+        }
+        .sv-num { font-size: 2rem; color: var(--accent-glow); font-family: 'Syncopate', sans-serif;}
+        .sv-title { font-size: 4rem; flex: 1; }
+
+        /* Fold 3: Image Galleries floating */
+        .fold-3 .gallery {
+            display: flex;
+            gap: 4rem;
+            align-items: center;
+            height: 60vh;
+        }
+        .gal-img {
+            width: 30vw;
+            height: 50vh;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        .gal-img::after {
+            content: '';
+            position:absolute; top:0; left:0; width:100%; height:100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        }
+        .gal-img img {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: grayscale(100%); transition: filter 0.5s;
+        }
+        .gal-img:hover img { filter: grayscale(0%); }
+
+        /* Fold 4: Tech Stack Map */
+        .fold-4 .tech-map {
+            width: 80%; height: 80%;
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .core { font-size: 3rem; font-family: 'Syncopate'; }
+
+        /* Fold 5: Footer / Outro */
+        .fold-5 { flex-direction: column; text-align: center; justify-content: center; }
+        .contact-h1 { font-size: 8rem; color: var(--accent-glow); text-decoration: none; margin-bottom: 4rem; }
+        .footer-details { display: flex; gap: 4rem; font-size: 1.2rem; color: rgba(255,255,255,0.5); }
+
+    </style>
+</head>
+<body>
+
+    <div class="parallax-bg" id="parallaxBg"></div>
+    <div class="glow-orb" style="top: 20%; left: 10%;"></div>
+
+    <nav>
+        <a href="#" class="logo">DEEP // SEA</a>
+        <div style="color:var(--accent-glow); font-size:0.9rem; letter-spacing:2px;">SCROLL TO NAVIGATE</div>
+    </nav>
+
+    <div class="progress-bar">
+        <div class="progress-indicator" id="progressIndicator"></div>
+    </div>
+
+    <!-- MAIN HORIZONTAL WRAPPER -->
+    <div class="scroll-container" id="scrollContainer">
+        
+        <!-- FOLD 1 -->
+        <section class="fold fold-1">
+            <div class="content-wrap">
+                <h1 class="title-massive">ABYSSAL<br><span>INNOVATION</span></h1>
+                <p class="subtitle">Dive into the deep web. We construct immersive digital environments leveraging cutting-edge webGL and fluid algorithms.</p>
+            </div>
+        </section>
+
+        <!-- FOLD 2 -->
+        <section class="fold fold-2">
+            <div class="services-list">
+                <div class="sv-item">
+                    <div class="sv-num">01</div>
+                    <div class="sv-title">FLUID DYNAMICS</div>
+                </div>
+                <div class="sv-item">
+                    <div class="sv-num">02</div>
+                    <div class="sv-title">WEBGL RENDERING</div>
+                </div>
+                <div class="sv-item">
+                    <div class="sv-num">03</div>
+                    <div class="sv-title">SPATIAL UI</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOLD 3 -->
+        <section class="fold fold-3">
+            <div class="gallery">
+                <div class="gal-img"><img src="https://images.unsplash.com/photo-1618172193622-ae2d025f4032?auto=format&fit=crop&w=800&q=80" alt="Tech"></div>
+                <div class="gal-img" style="transform: translateY(50px);"><img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80" alt="Cyber"></div>
+            </div>
+        </section>
+
+        <!-- FOLD 4 -->
+        <section class="fold fold-4">
+            <div class="tech-map">
+                <div class="core">THE CORE</div>
+                <!-- Abstract mapping logic could go here -->
+                <p style="position:absolute; bottom: -50px; text-align:center; color: var(--accent-glow);">SYSTEMS OPERATIONAL AND SECURE</p>
+            </div>
+        </section>
+
+        <!-- FOLD 5 (FOOTER) -->
+        <section class="fold fold-5">
+            <h2 style="font-size: 2rem; margin-bottom:1rem;">INITIATE SEQUENCE</h2>
+            <a href="#" class="contact-h1">COMMUNICATE</a>
+            <div class="footer-details">
+                <span>COORD: 34.0522° N, 118.2437° W</span>
+                <span>STATUS: ONLINE</span>
+                <span>© 2026 DEEP SEA PROTOCOL</span>
+            </div>
+        </section>
+    </div>
+
+    <!-- JS FOR HORIZONTAL SCROLL JACKING -->
+    <script>
+        const container = document.getElementById('scrollContainer');
+        const parallaxBg = document.getElementById('parallaxBg');
+        const progressIndicator = document.getElementById('progressIndicator');
+        const totalFolds = 5;
+        let currentFold = 0;
+        let isAnimating = false;
+
+        window.addEventListener('wheel', (e) => {
+            if (isAnimating) return;
+            
+            if (e.deltaY > 0) {
+                // Scroll Down -> Move Right
+                if (currentFold < totalFolds - 1) {
+                    currentFold++;
+                    updateScroll();
+                }
+            } else {
+                // Scroll Up -> Move Left
+                if (currentFold > 0) {
+                    currentFold--;
+                    updateScroll();
+                }
+            }
+        });
+
+        function updateScroll() {
+            isAnimating = true;
+            // Translate container
+            container.style.transform = `translateX(-${currentFold * 100}vw)`;
+            // Parallax BG
+            parallaxBg.style.transform = `translateX(-${currentFold * 5}vw)`;
+            // Progress Bar update
+            const progress = (currentFold / (totalFolds - 1)) * 100;
+            progressIndicator.style.width = `${progress}%`;
+
+            setTimeout(() => {
+                isAnimating = false;
+            }, 800); // matches CSS transition duration
+        }
+    </script>
+</body>
+</html>

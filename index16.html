@@ -1,0 +1,251 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #16 - Elegant Slider</title>
+    <!-- Ultra thin serif -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #ece9e3; /* Muted beige */
+            --text-dark: #2a2a2a;
+            --accent: #b0a084;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body, html {
+            background-color: var(--bg);
+            color: var(--text-dark);
+            font-family: 'Montserrat', sans-serif;
+            width: 100vw;
+            height: 100vh; /* Fixed height for full screen slider */
+            overflow: hidden; /* Hide scrollbars entirely */
+        }
+
+        h1, h2, h3, .serif { font-family: 'Cinzel', serif; font-weight: 400; }
+
+        /* 
+          =============================================
+          NAVIGATION & UI ELEMENTS (FIXED)
+          =============================================
+        */
+        nav {
+            position: fixed; top: 0; left: 0; width: 100%; padding: 2rem 4rem; display: flex; justify-content: space-between; align-items: center; z-index: 100;
+        }
+        .logo { font-size: 1.5rem; letter-spacing: 4px; text-transform: uppercase; color: var(--text-dark); text-decoration: none;}
+        .menu-btn { font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border-bottom: 1px solid var(--text-dark); padding-bottom: 2px;}
+
+        .slide-counter {
+            position: fixed; bottom: 4rem; left: 4rem; z-index: 100; font-family: 'Cinzel'; font-size: 2rem; font-style: italic;
+        }
+        .slide-counter span { color: var(--accent); font-size: 1rem; }
+
+        .slide-nav {
+            position: fixed; bottom: 4rem; right: 4rem; z-index: 100; display: flex; gap: 2rem;
+        }
+        .nav-btn {
+            font-family: 'Cinzel'; font-size: 1.5rem; cursor: pointer; color: var(--text-dark); text-transform: uppercase; letter-spacing: 2px; transition: color 0.3s;
+        }
+        .nav-btn:hover { color: var(--accent); }
+
+        /* 
+          =============================================
+          SLIDER WRAPPER (Acts as the 5 Folds)
+          =============================================
+        */
+        .slider-wrapper {
+            position: absolute; top: 0; left: 0; width: 100%; height: 500vh; /* 5 slides * 100vh */
+            transform: translateY(0);
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+            will-change: transform;
+        }
+
+        .slide {
+            width: 100%; height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; padding: 0 10vw; overflow: hidden;
+        }
+
+        /* 
+          =============================================
+          SLIDE COMPOSITION
+          =============================================
+        */
+        .s-content {
+            flex: 1; z-index: 10; opacity: 0; transform: translateY(50px); transition: 1s ease 0.5s;
+        }
+        .slide.active .s-content { opacity: 1; transform: translateY(0); }
+
+        .s-title {
+            font-size: clamp(4rem, 8vw, 8rem); line-height: 1; margin-bottom: 2rem;
+        }
+        .s-desc {
+            font-size: 1.1rem; max-width: 400px; line-height: 1.8; color: #666; font-weight: 300;
+        }
+
+        .s-image {
+            flex: 1; height: 70vh; position: relative; overflow: hidden;
+            opacity: 0; transform: scale(1.1); transition: 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+        }
+        .slide.active .s-image { opacity: 1; transform: scale(1); }
+        
+        .s-image img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* 
+          =============================================
+          SLIDE VARIATIONS
+          =============================================
+        */
+        /* Slide 1: Hero Right align image */
+        .slide-1 .s-content { padding-right: 5vw; }
+
+        /* Slide 2: Left align image, dark bg */
+        .slide-2 { background-color: #2a2a2a; color: #ece9e3; }
+        .slide-2 .s-desc { color: #aaa; }
+        .slide-2 .s-image { order: -1; margin-right: 5vw; }
+
+        /* Slide 3: Center huge image, text overlap */
+        .slide-3 { flex-direction: column; justify-content: center; text-align: center; }
+        .slide-3 .s-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; z-index: 20; color: #fff;}
+        .slide-3.active .s-content { transform: translate(-50%, -50%); opacity: 1; }
+        .slide-3 .s-title { font-size: 10vw; mix-blend-mode: difference; }
+        .slide-3 .s-image { width: 60vw; height: 80vh; flex: none; position: absolute; z-index: 1;}
+
+        /* Slide 4: Split Grid */
+        .slide-4 .s-content { order: 2; padding-left: 5vw; text-align: right; }
+        .slide-4 .s-image { flex: 0.5; height: 50vh; }
+
+        /* Slide 5: Footer / Outro */
+        .slide-5 { background-color: var(--accent); color: #fff; flex-direction: column; text-align: center;}
+        .slide-5 .s-title { font-size: 12vw; margin-bottom: 0; }
+        .slide-5 .s-desc { max-width: 600px; margin: 2rem auto; color: #fff; }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo">LUXURIA</a>
+        <div class="menu-btn">Menu</div>
+    </nav>
+
+    <div class="slide-counter">
+        <span id="current">01</span> / 05
+    </div>
+
+    <div class="slide-nav">
+        <div class="nav-btn" id="prev">Prev</div>
+        <div class="nav-btn" id="next">Next</div>
+    </div>
+
+    <!-- MAIN SLIDER -->
+    <div class="slider-wrapper" id="slider">
+        
+        <!-- SLIDE 1 -->
+        <div class="slide slide-1 active">
+            <div class="s-content">
+                <h1 class="s-title serif">The <br>Aesthetic.</h1>
+                <p class="s-desc">Redefining elegance through minimal interactions and massive photographic showcases. Welcome to the gallery.</p>
+            </div>
+            <div class="s-image">
+                <img src="file:///C:/Users/Himanshu/.gemini/antigravity/brain/c7bee168-9405-4880-b150-9f22b2890e72/elegant_gallery_1775796591172.png" alt="Fashion 1">
+            </div>
+        </div>
+
+        <!-- SLIDE 2 -->
+        <div class="slide slide-2">
+            <div class="s-content">
+                <h2 class="s-title serif">Dark<br>Contrast.</h2>
+                <p class="s-desc">Sometimes absolute darkness is required to pull the highlights out of an image. Serene, profound, deep.</p>
+            </div>
+            <div class="s-image">
+                <img src="https://images.unsplash.com/photo-1510227272981-87123e259b17?auto=format&fit=crop&q=80&w=1000" alt="Fashion 2">
+            </div>
+        </div>
+
+        <!-- SLIDE 3 -->
+        <div class="slide slide-3">
+            <div class="s-image">
+                <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=1000" alt="Fashion 3">
+            </div>
+            <div class="s-content">
+                <h2 class="s-title serif">IMMERSION</h2>
+            </div>
+        </div>
+
+        <!-- SLIDE 4 -->
+        <div class="slide slide-4">
+            <div class="s-image">
+                <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=1000" alt="Fashion 4">
+            </div>
+            <div class="s-content">
+                <h2 class="s-title serif">Subtle<br>Forms.</h2>
+                <p class="s-desc">Every line of CSS is meticulously written to remove weight from the DOM and add presence to the picture.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 5 -->
+        <div class="slide slide-5">
+            <div class="s-content" style="transform:none; opacity:1;">
+                <h2 class="s-title serif">FIN.</h2>
+                <p class="s-desc">This concludes your private viewing. Commission our studio for digital galleries that breathe.</p>
+                <div style="margin-top: 4rem; letter-spacing: 2px; font-size: 0.8rem; text-transform: uppercase;">© 2026 LUXURIA STUDIO. All Rights Reserved.</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SLIDER LOGIC -->
+    <script>
+        const slider = document.getElementById('slider');
+        const slides = document.querySelectorAll('.slide');
+        const nextBtn = document.getElementById('next');
+        const prevBtn = document.getElementById('prev');
+        const counter = document.getElementById('current');
+        
+        let currentIndex = 0;
+        const totalSlides = slides.length;
+        let isAnimating = false;
+
+        function updateSlider() {
+            if(isAnimating) return;
+            isAnimating = true;
+
+            // Move wrapper
+            slider.style.transform = `translateY(-${currentIndex * 100}vh)`;
+            
+            // Update Number
+            counter.innerText = `0${currentIndex + 1}`;
+
+            // Add active class for CSS animations
+            slides.forEach((s, idx) => {
+                if(idx === currentIndex) s.classList.add('active');
+                else s.classList.remove('active');
+            });
+
+            setTimeout(() => { isAnimating = false; }, 1200); // Wait for css transition
+        }
+
+        // Click nav
+        nextBtn.addEventListener('click', () => {
+            if(currentIndex < totalSlides - 1) { currentIndex++; updateSlider(); }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if(currentIndex > 0) { currentIndex--; updateSlider(); }
+        });
+
+        // Wheel nav (debounce)
+        window.addEventListener('wheel', (e) => {
+            if(isAnimating) return;
+            if(e.deltaY > 0) {
+                if(currentIndex < totalSlides - 1) { currentIndex++; updateSlider(); }
+            } else {
+                if(currentIndex > 0) { currentIndex--; updateSlider(); }
+            }
+        });
+    </script>
+</body>
+</html>

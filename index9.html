@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #9 - Brutal Typography</title>
+    <!-- Ultra Bold Condensed Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #111111;
+            --text-main: #f4f4f0;
+            --accent: #fc440f;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Bebas Neue', sans-serif;
+            overflow-x: hidden;
+        }
+
+        ::selection { background: var(--accent); color: var(--bg); }
+
+        /* 
+          =============================================
+          NOISE MASK LAYER
+          =============================================
+        */
+        .texture-mask {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: url('file:///C:/Users/Himanshu/.gemini/antigravity/brain/c7bee168-9405-4880-b150-9f22b2890e72/typography_texture_1775795823104.png');
+            background-size: cover;
+            mix-blend-mode: overlay; /* Applies texture to everything below */
+            pointer-events: none;
+            opacity: 0.6;
+            z-index: 999;
+        }
+
+        /* 
+          =============================================
+          BASE SECTION
+          =============================================
+        */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 2px solid var(--text-main);
+            position: relative;
+        }
+
+        h1, h2, h3 { line-height: 0.8; margin: 0; text-transform: uppercase; }
+
+        /* 
+          =============================================
+          FOLD 1: OVERLAPPING HERO
+          =============================================
+        */
+        .hero { justify-content: center; align-items: center; overflow: hidden; background: var(--accent); color: var(--bg); border: none;}
+        
+        .huge-text-layer {
+            position: absolute;
+            font-size: 25vw;
+            white-space: nowrap;
+            opacity: 0.1;
+        }
+        .ht-1 { top: -5vw; left: -10vw; transform: rotate(-5deg); }
+        .ht-2 { bottom: -5vw; right: -5vw; transform: rotate(5deg); }
+
+        .hero-center { z-index: 10; text-align: center; }
+        .hero-center h1 { font-size: 15vw; letter-spacing: -5px; }
+
+        /* 
+          =============================================
+          FOLD 2: INFINITE MARQUEE WALL
+          =============================================
+        */
+        .marquee-wall { display: flex; flex-direction: column; justify-content: space-evenly; background: var(--bg); padding: 5vh 0;}
+        
+        .marquee-row {
+            white-space: nowrap; font-size: 12vw; overflow: hidden; display: flex;
+        }
+
+        .m-text {
+            animation: scrollX 20s linear infinite; display: inline-block; padding-right: 2vw;
+        }
+        .m-text.reverse { animation-direction: reverse; animation-duration: 25s; color: var(--accent); }
+        
+        @keyframes scrollX {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .hollow { -webkit-text-stroke: 2px var(--text-main); color: transparent; }
+
+        /* 
+          =============================================
+          FOLD 3: THE MANIFESTO BLOCK
+          =============================================
+        */
+        .manifesto { padding: 5vw; background: var(--text-main); color: var(--bg); display: block;}
+        .manifesto p {
+            font-family: 'Teko', sans-serif;
+            font-size: clamp(3rem, 6vw, 6rem);
+            line-height: 0.9;
+            text-transform: uppercase;
+            text-align: justify;
+        }
+        .manifesto p span { color: var(--accent); }
+
+        /* 
+          =============================================
+          FOLD 4: BIG LIST
+          =============================================
+        */
+        .big-list { display: block; }
+        .list-item {
+            width: 100%; border-bottom: 2px solid var(--text-main);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 2vw 5vw; cursor: crosshair; transition: background 0.2s;
+        }
+        .list-item:hover { background: var(--text-main); color: var(--bg); }
+        .list-item:hover .li-right { color: var(--accent); }
+        
+        .li-left { font-size: 8vw; }
+        .li-right { font-size: 3vw; font-family: 'Teko'; color: gray; transition: color 0.2s;}
+
+        /* 
+          =============================================
+          FOLD 5: OUTRO
+          =============================================
+        */
+        .outro { background: var(--accent); justify-content: space-between; padding: 5vw; flex-direction: row; align-items: flex-end; border: none;}
+        .outro h2 { font-size: 15vw; color: var(--bg); }
+        .outro-links { display: flex; flex-direction: column; font-size: 4vw; border-left: 5px solid var(--bg); padding-left: 2rem;}
+        .outro-links a { color: var(--bg); text-decoration: none; transition: 0.2s; }
+        .outro-links a:hover { -webkit-text-stroke: 1px var(--bg); color: transparent; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Global texture mask for grunge print effect -->
+    <div class="texture-mask"></div>
+
+    <!-- FOLD 1: LOUD HERO -->
+    <section class="hero">
+        <div class="huge-text-layer ht-1">NO IMAGES</div>
+        <div class="huge-text-layer ht-2">JUST TYPE</div>
+        <div class="hero-center">
+            <h1>BRUTAL</h1>
+            <h1 class="hollow" style="-webkit-text-stroke: 4px var(--bg);">TYPE.</h1>
+        </div>
+    </section>
+
+    <!-- FOLD 2: MARQUEE WALL -->
+    <section class="marquee-wall">
+        <div class="marquee-row">
+            <div class="m-text">
+                WE DO NOT WHISPER / WE SHOUT / WE DO NOT WHISPER / WE SHOUT /
+            </div>
+            <div class="m-text">
+                WE DO NOT WHISPER / WE SHOUT / WE DO NOT WHISPER / WE SHOUT /
+            </div>
+        </div>
+        <div class="marquee-row">
+            <div class="m-text reverse hollow">
+                SCALE IS EVERYTHING / BIGGER IS BETTER / SCALE IS EVERYTHING / BIGGER IS BETTER /
+            </div>
+            <div class="m-text reverse hollow">
+                SCALE IS EVERYTHING / BIGGER IS BETTER / SCALE IS EVERYTHING / BIGGER IS BETTER /
+            </div>
+        </div>
+         <div class="marquee-row">
+            <div class="m-text">
+                NO WHITE SPACE / FILL THE VOID / NO WHITE SPACE / FILL THE VOID /
+            </div>
+            <div class="m-text">
+                NO WHITE SPACE / FILL THE VOID / NO WHITE SPACE / FILL THE VOID /
+            </div>
+        </div>
+    </section>
+
+    <!-- FOLD 3: MANIFESTO -->
+    <section class="manifesto">
+        <p>
+            Typography is not just a vessel for meaning; it is the <span>meaning</span> itself. We strip away the unnecessary imagery, the gentle gradients, the subtle drop shadows. We leave only raw, high-contrast shapes. Letters became architecture. Weight dictates importance. If it doesn't punch you in the face, it isn't massive enough.
+        </p>
+    </section>
+
+    <!-- FOLD 4: BIG INTERACTIVE LIST -->
+    <section class="big-list">
+        <div class="list-item">
+            <div class="li-left">01_BOLD</div>
+            <div class="li-right">FW.900</div>
+        </div>
+        <div class="list-item">
+            <div class="li-left">02_HEAVY</div>
+            <div class="li-right">TRACKING -5</div>
+        </div>
+        <div class="list-item">
+            <div class="li-left">03_RAW</div>
+            <div class="li-right">NO ANTI_ALIAS</div>
+        </div>
+        <div class="list-item">
+            <div class="li-left">04_LOUD</div>
+            <div class="li-right">ALL CAPS</div>
+        </div>
+    </section>
+
+    <!-- FOLD 5: FOOTER -->
+    <section class="outro">
+        <h2>END.</h2>
+        <div class="outro-links">
+            <a href="#">TWITTER -></a>
+            <a href="#">INSTAGRAM -></a>
+            <a href="#">CONTACT -></a>
+        </div>
+    </section>
+
+</body>
+</html>

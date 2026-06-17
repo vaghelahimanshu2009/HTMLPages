@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #38 - Bauhaus Poster</title>
+    <!-- Utilitarian Geometric Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --paper: #f1edeb; /* Offwhite/creme */
+            --ink: #1a1a1a;
+            --bau-red: #d32f2f;
+            --bau-blue: #1976d2;
+            --bau-yellow: #fbc02d;
+            --stroke: 8px solid var(--ink); /* Very thick lines */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--paper);
+            color: var(--ink);
+            font-family: 'Josefin Sans', sans-serif;
+            overflow-x: hidden;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        /* 
+          =============================================
+          THE POSTER FRAME
+          =============================================
+        */
+        .poster {
+            width: 100%; max-width: 900px; aspect-ratio: 3/4; /* Classic poster ratio */
+            border: var(--stroke);
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr;
+            grid-template-rows: 2fr 1fr 1.5fr;
+            background: #fff;
+            position: relative;
+            box-shadow: 20px 20px 0 rgba(0,0,0,0.1);
+        }
+
+        /* 
+          =============================================
+          GRID SECTORS (Pure De Stijl / Bauhaus block logic)
+          =============================================
+        */
+        .block {
+            border: var(--stroke); margin: -4px; /* Collapse borders by overlapping */
+            display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden;
+        }
+
+        /* Top Left - Yellow Square */
+        .b1 { grid-column: 1 / 2; grid-row: 1 / 2; background: var(--bau-yellow); }
+        
+        /* Top Center - Typographical Stack */
+        .b2 { grid-column: 2 / 3; grid-row: 1 / 2; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; padding: 1rem; }
+        .b2 h1 { font-size: 4rem; line-height: 0.8; letter-spacing: -2px; }
+
+        /* Top Right - Big Red Circle in White Box */
+        .b3 { grid-column: 3 / 4; grid-row: 1 / 3; }
+        .circle-red { width: 80%; aspect-ratio: 1/1; background: var(--bau-red); border-radius: 50%; }
+
+        /* Middle Left span 2 - Blue Rectangle */
+        .b4 { grid-column: 1 / 3; grid-row: 2 / 3; background: var(--bau-blue); }
+
+        /* Bottom Left - The word 'STAATLICHES' */
+        .b5 { grid-column: 1 / 3; grid-row: 3 / 4; padding: 2rem; background: var(--ink); color: var(--paper); }
+        .b5 h2 { font-size: 4rem; word-break: break-all; line-height: 1; }
+
+        /* Bottom Right - Small Grid & Text */
+        .b6 { grid-column: 3 / 4; grid-row: 3 / 4; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+        .b6-sub { border: 4px solid var(--ink); margin: -2px; }
+        .b6-1 { background: var(--bau-yellow); }
+        .b6-2 { background: var(--bau-red); }
+        .b6-3 { background: var(--bau-blue); }
+        .b6-4 { background: #fff; display: flex; justify-content: center; align-items: center; font-size: 3rem; }
+
+        /* 
+          =============================================
+          HOVER ANIMATIONS
+          =============================================
+        */
+        /* Because this is code, not print, we make it interactive. */
+        .block { transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+        .block:hover { transform: scale(0.95); z-index: 10; box-shadow: 0 0 30px rgba(0,0,0,0.5);}
+
+        .circle-red { transition: 0.5s; }
+        .b3:hover .circle-red { border-radius: 0; width: 100%; height: 100%; } /* Morph to square */
+
+        @media (max-width: 768px) {
+            .poster { display: flex; flex-direction: column; aspect-ratio: auto;}
+            .block { min-height: 200px; margin: 0; border: none; border-bottom: var(--stroke);}
+            .b6 { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="poster">
+        <div class="block b1"></div>
+        
+        <div class="block b2">
+            <h1>BAU</h1>
+            <h1>HAUS</h1>
+        </div>
+        
+        <div class="block b3">
+            <div class="circle-red"></div>
+        </div>
+        
+        <div class="block b4">
+             <!-- An abstract white graphic element inside the blue -->
+            <div style="width: 50%; height: 10px; background: #fff; transform: rotate(45deg);"></div>
+        </div>
+        
+        <div class="block b5">
+            <h2>STAATLICHES WEIMAR</h2>
+            <p style="font-family: sans-serif; font-size: 0.9rem; margin-top: 1rem; font-weight: normal; max-width: 200px;">1919 - 1933. Form Follows Function. Digital Edition 2026.</p>
+        </div>
+        
+        <div class="block b6">
+            <div class="b6-sub b6-1"></div>
+            <div class="b6-sub b6-2"></div>
+            <div class="b6-sub b6-3"></div>
+            <div class="b6-sub b6-4">→</div>
+        </div>
+    </div>
+
+</body>
+</html>

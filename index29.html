@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #29 - Web3 Neon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-1: #050117;
+            --bg-2: #120934;
+            --neon-blue: #00f0ff;
+            --neon-purple: #9d00ff;
+            --text-color: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-1), var(--bg-2));
+            color: var(--text-color);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* 
+          =============================================
+          WEB3 ORBITING BACKGROUND ORBS
+          =============================================
+        */
+        .orb {
+            position: fixed; border-radius: 50%; filter: blur(100px); z-index: -1; animation: float 20s infinite alternate; opacity: 0.6;
+        }
+        .orb-1 { width: 500px; height: 500px; background: var(--neon-purple); top: -200px; left: -100px; }
+        .orb-2 { width: 400px; height: 400px; background: var(--neon-blue); bottom: -100px; right: -100px; animation-duration: 25s; animation-direction: alternate-reverse;}
+
+        @keyframes float { 100% { transform: scale(1.5) translate(100px, 50px); } }
+
+        /* 
+          =============================================
+          GLOBAL UI OVERLAYS
+          =============================================
+        */
+        nav {
+            padding: 2rem 5vw; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 100;
+        }
+        
+        .logo { font-family: 'Syncopate', sans-serif; font-size: 1.5rem; letter-spacing: 2px; }
+        .logo span { background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+
+        .btn-glow {
+            padding: 0.8rem 2rem; border-radius: 30px; font-weight: 600; cursor: pointer; text-decoration: none; color: #fff;
+            background: linear-gradient(90deg, rgba(0,240,255,0.2), rgba(157,0,255,0.2));
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: 0.3s; position: relative; overflow: hidden;
+        }
+        .btn-glow::before { content:''; position: absolute; top:0; left:-100%; width:100%; height:100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transition: 0.5s; }
+        .btn-glow:hover { box-shadow: 0 0 20px rgba(0,240,255,0.4); border-color: var(--neon-blue); }
+        .btn-glow:hover::before { left: 100%; }
+
+        /* 
+          =============================================
+          FOLD 1: HERO
+          =============================================
+        */
+        section { min-height: 100vh; padding: 5vw; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 10;}
+
+        .hero { align-items: center; text-align: center; }
+        .h-badge { padding: 8px 20px; border-radius: 50px; background: var(--glass-bg); border: 1px solid var(--glass-border); margin-bottom: 2rem; font-size: 0.9rem;}
+        .hero h1 { font-size: clamp(3rem, 8vw, 6rem); font-family: 'Syncopate'; font-weight: 700; line-height: 1.1; margin-bottom: 2rem;}
+        
+        .h-visual { margin-top: 5rem; width: 100%; max-width: 1000px; display: flex; gap: 2rem; }
+
+        /* Glowing Glass Cards */
+        .glass-card {
+            background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border);
+            border-radius: 24px; padding: 3rem 2rem; flex: 1; position: relative; overflow: hidden; transition: 0.3s;
+        }
+        /* Top Gradient Accent */
+        .glass-card::before { content:''; position:absolute; top:0; left:0; width:100%; height:2px; background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple)); opacity: 0; transition: 0.3s;}
+        .glass-card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.05);}
+        .glass-card:hover::before { opacity: 1; }
+        
+        .c-icon { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, rgba(0,240,255,0.2), rgba(157,0,255,0.2)); display:flex; justify-content:center; align-items:center; font-size: 1.5rem; margin-bottom: 2rem; border: 1px solid var(--glass-border);}
+        .glass-card h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .glass-card p { color: #aaa; line-height: 1.6; }
+
+        /* 
+          =============================================
+          FOLD 2: TOKENOMICS / METRICS
+          =============================================
+        */
+        .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 4rem;}
+        .m-item { text-align: center; padding: 2rem; border-right: 1px solid var(--glass-border); }
+        .m-item:last-child { border: none; }
+        .m-item h2 { font-family: 'Syncopate'; font-size: 3rem; background: linear-gradient(180deg, #fff, #888); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+        .m-item p { color: var(--neon-blue); letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem; margin-top: 1rem;}
+
+        /* 
+          =============================================
+          FOLD 3: PROTOCOL CTA
+          =============================================
+        */
+        .cta-box { width: 100%; padding: 8vw 5vw; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 40px; text-align: center; position: relative; overflow: hidden;}
+        /* Rotating gradient border trick */
+        .cta-box::after { content:''; position: absolute; width: 200%; height: 200%; top: -50%; left: -50%; background: conic-gradient(transparent, transparent, var(--neon-purple), transparent, transparent); animation: spin 4s linear infinite; z-index: -2; }
+        .cta-inner { background: var(--bg-1); position: absolute; inset: 2px; border-radius: 38px; z-index: -1; }
+        
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        @media (max-width: 900px) {
+            .h-visual { flex-direction: column; }
+            .metrics-grid { grid-template-columns: 1fr 1fr; border-right: none;}
+            .m-item { border-bottom: 1px solid var(--glass-border); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <nav>
+        <div class="logo">ETHER<span>.FI</span></div>
+        <a href="#" class="btn-glow">Connect Wallet</a>
+    </nav>
+
+    <!-- FOLD 1: HERO -->
+    <section class="hero">
+        <div class="h-badge">Protocol V2 is Live on Mainnet ⚡</div>
+        <h1>THE LIQUID<br>PRIMITIVE</h1>
+        <p style="font-size: 1.2rem; color: #aaa;">Non-custodial, high-yield staking infrastructure designed to securely generate maximum return on deep-liquid assets.</p>
+        
+        <div class="h-visual">
+            <div class="glass-card">
+                <div class="c-icon">🧊</div>
+                <h3>Liquid Staking</h3>
+                <p>Deposit standard tokens and automatically receive rebasing yield-bearing derivatives.</p>
+            </div>
+            <div class="glass-card">
+                <div class="c-icon">🛡️</div>
+                <h3>Slashing Protection</h3>
+                <p>First of its kind automated insurance fund that entirely prevents node slashing penalties.</p>
+            </div>
+            <div class="glass-card">
+                <div class="c-icon">⚡</div>
+                <h3>Flash Exits</h3>
+                <p>Bypass the 21-day unbonding period instantly via our internal liquidity pools.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOLD 2: METRICS -->
+    <section>
+        <h2 style="font-family: 'Syncopate'; font-size:2.5rem; text-align:center;">NETWORK STATUS</h2>
+        <div class="glass-card" style="margin-top:2rem; padding: 1rem;">
+            <div class="metrics-grid" style="margin-top:0;">
+                <div class="m-item"><h2>$12.4B</h2><p>Total Value Locked</p></div>
+                <div class="m-item"><h2>84.2K</h2><p>Active Validators</p></div>
+                <div class="m-item"><h2>4.8%</h2><p>Est. Baseline APR</p></div>
+                <div class="m-item"><h2>$20M</h2><p>Insurance Fund</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOLD 3: CTA -->
+    <section>
+        <div class="cta-box">
+            <div class="cta-inner"></div>
+            <h2 style="font-family: 'Syncopate'; font-size:4rem; margin-bottom: 2rem;">START STAKING</h2>
+            <p style="margin-bottom: 3rem; color: #aaa;">Join thousands of institutional nodes already building on the infrastructure.</p>
+            <a href="#" class="btn-glow" style="font-size: 1.2rem; padding: 1rem 4rem;">Launch App</a>
+        </div>
+    </section>
+
+</body>
+</html>

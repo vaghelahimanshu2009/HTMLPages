@@ -1,0 +1,236 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #19 - Interactive 3D Cards</title>
+    <!-- Modern Tech Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-deep: #05051a;
+            --accent-cyan: #00f0ff;
+            --accent-purple: #8a2be2;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-deep);
+            color: #fff;
+            font-family: 'Manrope', sans-serif;
+            overflow-x: hidden;
+            perspective: 2000px; /* Crucial for 3D effect globally */
+        }
+
+        /* 
+          =============================================
+          GLOBAL BACKGROUND
+          =============================================
+        */
+        .ambient-light {
+            position: fixed; width: 100vw; height: 100vh; top: 0; left: 0; z-index: -1;
+            background: radial-gradient(circle at 50% 50%, rgba(138,43,226,0.15) 0%, rgba(5,5,26,1) 60%);
+        }
+
+        /* 
+          =============================================
+          HEADER
+          =============================================
+        */
+        header { padding: 4rem 5vw; display: flex; justify-content: space-between; position: relative; z-index: 10;}
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: 2px;}
+        .nav a { color: #888; text-decoration: none; margin-left: 2rem; font-weight: 700; transition: 0.3s;}
+        .nav a:hover { color: var(--accent-cyan); }
+
+        /* 
+          =============================================
+          HERO & GRID (Merging Folds into a unified visual block)
+          =============================================
+        */
+        .hero { text-align: center; padding: 5rem 2rem 2rem 2rem; position: relative; z-index: 10;}
+        .hero h1 { font-size: clamp(3rem, 6vw, 6rem); line-height: 1.1; margin-bottom: 1rem; }
+        .hero p { color: #aaa; font-size: 1.2rem; max-width: 600px; margin: 0 auto; }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 4vw;
+            padding: 5vw;
+            max-width: 1600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 
+          =============================================
+          3D CARD INTERACT INTERFACE
+          =============================================
+        */
+        .scene {
+            perspective: 1500px;
+            width: 100%;
+            height: 450px;
+        }
+
+        .card {
+            width: 100%; height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease; /* Smooth out JS mouse tracking */
+            border-radius: 20px;
+        }
+
+        .card-content {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            display: flex; flex-direction: column; justify-content: space-between;
+            /* Give it its own internal 3D transform */
+            transform: translateZ(50px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+        
+        /* The iridescent image/texture */
+        .card-bg {
+            position: absolute; top:0; left:0; width:100%; height:100%;
+            background-image: url('file:///C:/Users/Himanshu/.gemini/antigravity/brain/c7bee168-9405-4880-b150-9f22b2890e72/holographic_cards_1775796866512.png');
+            background-size: cover; background-position: center;
+            opacity: 0.4; mix-blend-mode: screen; z-index: -1;
+            transition: opacity 0.3s;
+        }
+        .scene:hover .card-bg { opacity: 0.8; }
+
+        .c-tag { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-cyan); transform: translateZ(30px); display: inline-block;}
+        .c-title { font-size: 2.5rem; font-weight: 800; margin-top: auto; margin-bottom: 1rem; transform: translateZ(60px); color: #fff;}
+        .c-desc { color: #bbb; line-height: 1.5; transform: translateZ(40px); }
+
+        /* Fake reflection glow */
+        .glow {
+            position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 50%);
+            opacity: 0; pointer-events: none; transition: opacity 0.3s;
+        }
+        .scene:hover .glow { opacity: 1; }
+
+        /* 
+          =============================================
+          FOOTER / INFO
+          =============================================
+        */
+        .info-panel { text-align: center; padding: 10vw 5vw; background: rgba(0,0,0,0.4); border-top: 1px solid rgba(255,255,255,0.05); margin-top: 5rem;}
+        .info-panel h2 { font-size: 3rem; margin-bottom: 2rem;}
+
+    </style>
+</head>
+<body>
+
+    <div class="ambient-light"></div>
+
+    <header>
+        <div class="logo">HOLO.UI</div>
+        <div class="nav">
+            <a href="#">Works</a>
+            <a href="#">Studio</a>
+        </div>
+    </header>
+
+    <div class="hero">
+        <h1>Spatial <br>Interactivity.</h1>
+        <p>Hover over the elements below. We use JavaScript to track pointer coordinates relative to the bounding box of each card, calculating real-time CSS transform matrixes for true Z-axis manipulation.</p>
+    </div>
+
+    <div class="card-grid">
+        
+        <!-- CARD 1 -->
+        <div class="scene">
+            <div class="card js-tilt">
+                <div class="card-content">
+                    <div class="card-bg"></div>
+                    <div class="glow"></div>
+                    <span class="c-tag">Project Alpha</span>
+                    <div>
+                        <h3 class="c-title">Iridescent</h3>
+                        <p class="c-desc">Exploring holographic foil textures applied through light blending.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="scene">
+            <div class="card js-tilt">
+                <div class="card-content">
+                    <div class="card-bg" style="filter: hue-rotate(90deg);"></div>
+                    <div class="glow"></div>
+                    <span class="c-tag">Project Beta</span>
+                    <div>
+                        <h3 class="c-title">Depth Of Field</h3>
+                        <p class="c-desc">Floating child elements pushed along the translateZ axis.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="scene">
+            <div class="card js-tilt">
+                <div class="card-content">
+                    <div class="card-bg" style="filter: hue-rotate(180deg);"></div>
+                    <div class="glow"></div>
+                    <span class="c-tag">Project Gamma</span>
+                    <div>
+                        <h3 class="c-title">Kinetics</h3>
+                        <p class="c-desc">Immediate physical response to user pointer interactions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="info-panel">
+        <h2>Engage The Future</h2>
+        <p style="color:#aaa;">Interactive design doesn't exist on a flat plane anymore.</p>
+    </div>
+
+    <!-- JS TILT LOGIC -->
+    <script>
+        const cards = document.querySelectorAll('.scene');
+
+        cards.forEach(scene => {
+            const card = scene.querySelector('.card');
+            const glow = scene.querySelector('.glow');
+
+            scene.addEventListener('mousemove', (e) => {
+                const rect = scene.getBoundingClientRect();
+                const x = e.clientX - rect.left; // x position within the element.
+                const y = e.clientY - rect.top;  // y position within the element.
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = ((y - centerY) / centerY) * -15; // Max 15 deg tilt
+                const rotateY = ((x - centerX) / centerX) * 15;
+
+                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                
+                // Move glow
+                glow.style.transform = `translate(${x - rect.width}px, ${y - rect.height}px)`;
+            });
+
+            scene.addEventListener('mouseleave', () => {
+                card.style.transform = `rotateX(0deg) rotateY(0deg)`;
+                card.style.transition = `transform 0.5s ease`; // snap back gently
+                setTimeout(() => { card.style.transition = `transform 0.1s ease`; }, 500); // revert to fast track
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,233 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #25 - Data Viz Dashboard</title>
+    <!-- Technical strict font -->
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #090b10;
+            --panel: #12151f;
+            --border: #23283b;
+            --accent-green: #10b981;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --text-main: #e2e8f0;
+            --text-dim: #64748b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'IBM Plex Sans', sans-serif;
+            overflow-x: hidden;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+
+        .mono { font-family: 'IBM Plex Mono', monospace; }
+
+        /* 
+          =============================================
+          LEFT: SIDEBAR NAVIGATION
+          =============================================
+        */
+        aside { background: var(--panel); border-right: 1px solid var(--border); padding: 2rem; display: flex; flex-direction: column;}
+        .logo { font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 3rem; display: flex; align-items:center; gap: 10px;}
+        .logo::before { content:''; display:inline-block; width: 15px; height: 15px; background: var(--accent-blue); border-radius:3px;}
+
+        .nav-link { display: flex; align-items: center; gap: 15px; color: var(--text-dim); text-decoration: none; padding: 1rem 0; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.05); transition: 0.2s;}
+        .nav-link:hover, .nav-link.active { color: var(--text-main); }
+        .nav-link.active { border-right: 3px solid var(--accent-blue); }
+        .nav-icon { width: 20px; height: 20px; background: var(--border); border-radius: 4px; }
+
+        /* 
+          =============================================
+          RIGHT: MAIN DASHBOARD AREA
+          =============================================
+        */
+        main { padding: 2rem 4rem; overflow-y: auto;}
+        
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; }
+        .h-title h1 { font-size: 2rem; font-weight: 400; }
+        .h-title p { color: var(--text-dim); }
+        .user-status { display: flex; align-items:center; gap:10px; }
+        .status-dot { width: 10px; height: 10px; background: var(--accent-green); border-radius: 50%; box-shadow: 0 0 10px var(--accent-green); }
+
+        /* KPI TOP ROW */
+        .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-bottom: 2rem; }
+        .kpi-card { background: var(--panel); border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; }
+        .kpi-card h3 { color: var(--text-dim); font-size: 0.9rem; text-transform: uppercase; margin-bottom: 1rem; letter-spacing: 1px;}
+        .kpi-val { font-size: 2.5rem; font-weight: 300; }
+        .kpi-change.up { color: var(--accent-green); }
+
+        /* MAIN CHARTS AREA */
+        .chart-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-bottom: 2rem;}
+        .c-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; }
+        .c-header { margin-bottom: 2rem; display: flex; justify-content: space-between;}
+        
+        /* Pure CSS Bar Chart */
+        .bar-chart { display: flex; align-items: flex-end; gap: 2%; height: 250px; border-bottom: 1px solid var(--border); border-left: 1px solid var(--border); padding: 10px 0;}
+        .bar { flex: 1; background: var(--accent-blue); border-radius: 4px 4px 0 0; position: relative; transition: height 1s ease-out;}
+        .bar:hover { filter: brightness(1.2); }
+        .bar span { position: absolute; top: -25px; width: 100%; text-align: center; color: var(--text-dim); font-size: 0.8rem;}
+
+        /* Pure CSS Donut/Conic Chart */
+        .donut-wrap { display: flex; justify-content: center; align-items: center; height: 250px; }
+        .donut-chart {
+            width: 200px; height: 200px; border-radius: 50%;
+            /* Uses conic-gradient to draw a pie chart */
+            background: conic-gradient(
+                var(--accent-blue) 0% 45%,
+                var(--accent-purple) 45% 75%,
+                var(--accent-green) 75% 100%
+            );
+            position: relative;
+            display: flex; justify-content: center; align-items: center;
+        }
+        /* Make it an actual ring */
+        .donut-chart::before {
+            content: ''; width: 140px; height: 140px; background: var(--panel); border-radius: 50%; position: absolute;
+        }
+        .donut-center { position: relative; z-index: 2; text-align: center;}
+        .donut-center h2 { font-size: 2.5rem; font-weight: 300; }
+
+        /* DATA TABLE SECTION */
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 1rem;}
+        .data-table th { text-align: left; padding: 1rem; color: var(--text-dim); border-bottom: 1px solid var(--border); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;}
+        .data-table td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.02);}
+        .data-table tr:hover { background: rgba(255,255,255,0.02); }
+
+    </style>
+</head>
+<body>
+
+    <aside>
+        <div class="logo">ORACLE.sys</div>
+        <a href="#" class="nav-link active"><div class="nav-icon" style="background:var(--accent-blue)"></div> Overview</a>
+        <a href="#" class="nav-link"><div class="nav-icon"></div> Analytics</a>
+        <a href="#" class="nav-link"><div class="nav-icon"></div> Database</a>
+        <a href="#" class="nav-link"><div class="nav-icon"></div> Server Config</a>
+        <div style="flex-grow: 1;"></div>
+        <div style="padding-top: 2rem; border-top: 1px solid var(--border); margin-top: auto;">
+            <p class="mono" style="font-size: 0.8rem; color: var(--text-dim);">VERSION 24.1.9<br>LIVE CONNECTION</p>
+        </div>
+    </aside>
+
+    <main>
+        <header>
+            <div class="h-title">
+                <h1>Global Metrics</h1>
+                <p class="mono">Last synced: Just now</p>
+            </div>
+            <div class="user-status mono">
+                <div class="status-dot"></div>
+                SYSTEM HEALTH OK
+            </div>
+        </header>
+
+        <div class="kpi-grid mono">
+            <div class="kpi-card">
+                <h3>Total Bandwidth</h3>
+                <div class="kpi-val">12.4 TB</div>
+                <div class="kpi-change up">↑ +14%</div>
+            </div>
+            <div class="kpi-card">
+                <h3>Active Nodes</h3>
+                <div class="kpi-val">842</div>
+                <div class="kpi-change up">↑ +5</div>
+            </div>
+            <div class="kpi-card">
+                <h3>Compute Load</h3>
+                <div class="kpi-val">87%</div>
+                <div class="kpi-change" style="color:var(--accent-purple)">Stable</div>
+            </div>
+            <div class="kpi-card">
+                <h3>Threats Mitigated</h3>
+                <div class="kpi-val">1,204</div>
+                <div class="kpi-change up">↑ +101%</div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            
+            <div class="c-panel">
+                <div class="c-header">
+                    <h2>Traffic Topology</h2>
+                    <span class="mono" style="color:var(--text-dim);">7 DAY AVERAGE</span>
+                </div>
+                <!-- Pure CSS Bar Chart Array -->
+                <div class="bar-chart">
+                    <div class="bar" style="height: 40%;"><span>Mo</span></div>
+                    <div class="bar" style="height: 60%;"><span>Tu</span></div>
+                    <div class="bar" style="height: 50%;"><span>We</span></div>
+                    <div class="bar" style="height: 80%;"><span>Th</span></div>
+                    <div class="bar" style="height: 100%; background:var(--accent-purple)"><span>Fr</span></div>
+                    <div class="bar" style="height: 30%;"><span>Sa</span></div>
+                    <div class="bar" style="height: 45%;"><span>Su</span></div>
+                </div>
+            </div>
+
+            <div class="c-panel">
+                <div class="c-header">
+                    <h2>Resource Allocation</h2>
+                </div>
+                <div class="donut-wrap">
+                    <div class="donut-chart">
+                        <div class="donut-center">
+                            <h2>100<span style="font-size:1rem; color:var(--text-dim)">%</span></h2>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:flex; justify-content:space-around; margin-top: 1rem; font-size: 0.8rem;" class="mono">
+                    <span style="color:var(--accent-blue)">45% Web</span>
+                    <span style="color:var(--accent-purple)">30% DB</span>
+                    <span style="color:var(--accent-green)">25% Cache</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="c-panel">
+            <h2>Recent Packet Logs</h2>
+            <table class="data-table mono">
+                <thead>
+                    <tr>
+                        <th>Timestamp ID</th>
+                        <th>Origin IP Range</th>
+                        <th>Protocol</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>x90A-1102</td>
+                        <td>192.168.1.^^^</td>
+                        <td>TCP/IP</td>
+                        <td style="color:var(--accent-green)">RESOLVED</td>
+                    </tr>
+                    <tr>
+                        <td>x90A-1103</td>
+                        <td>10.0.1.^^^</td>
+                        <td>UDP</td>
+                        <td style="color:var(--accent-green)">RESOLVED</td>
+                    </tr>
+                    <tr>
+                        <td>x90A-1104</td>
+                        <td>172.16.254.^^^</td>
+                        <td>HTTPS</td>
+                        <td style="color:var(--accent-purple)">PROCESSING</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+</body>
+</html>

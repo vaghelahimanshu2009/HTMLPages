@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #44 - Vintage CRT TV</title>
+    <!-- Pixel font -->
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-body: #1a1a1a;
+            --phosphor: #33ff00;
+            --tube-bg: #000a00;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-body);
+            display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden;
+            font-family: 'VT323', monospace;
+        }
+
+        /* 
+          =============================================
+          THE PHYSICAL TELEVISION FRAME
+          =============================================
+        */
+        .tv-frame {
+            width: 800px; height: 600px; max-width: 90vw; background: #2a2a2a; border-radius: 40px;
+            padding: 30px; box-shadow: inset 0 0 20px #000, 0 20px 50px rgba(0,0,0,0.8);
+            position: relative;
+        }
+        /* Buttons on TV */
+        .tv-knobs { position: absolute; right: 20px; top: 100px; display: flex; flex-direction: column; gap: 20px; }
+        .knob { width: 30px; height: 30px; border-radius: 50%; background: #111; box-shadow: inset -2px -2px 5px #333; border: 2px solid #000;}
+
+        /* 
+          =============================================
+          THE GLASS TUBE (CURVATURE & SHADOWS)
+          =============================================
+        */
+        .screen-glass {
+            width: calc(100% - 60px); height: 100%; border-radius: 50% / 10%; /* Makes it bulge */
+            background: var(--tube-bg); position: relative; overflow: hidden;
+            box-shadow: inset 0 0 50px #000;
+        }
+
+        /* 
+          =============================================
+          THE ACTUAL DISPLAY / INTERFACE
+          =============================================
+        */
+        .display {
+            position: absolute; top: 10%; left: 10%; width: 80%; height: 80%;
+            /* Apply 3D warp to push center out and pull corners back */
+            transform: scale(1.1) perspective(1000px) rotateX(2deg);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: var(--phosphor); text-align: center;
+            /* Glowing text */
+            text-shadow: 0 0 5px var(--phosphor), 0 0 10px var(--phosphor);
+            z-index: 10;
+        }
+
+        .channel { position: absolute; top: 20px; right: 20px; font-size: 3rem; }
+        .m-text { font-size: 5rem; margin-bottom: 2rem; }
+        .s-text { font-size: 2rem; max-width: 400px;}
+
+        /* 
+          =============================================
+          CRT OVERLAYS (Scanlines, Flicker, Vignette)
+          =============================================
+        */
+        /* Scanlines */
+        .screen-glass::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(transparent 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px; pointer-events: none; z-index: 50;
+        }
+        
+        /* The slowly moving glowing scan bar */
+        .scan-bar {
+            position: absolute; top: 0; left: 0; width: 100%; height: 20px; background: rgba(51, 255, 0, 0.1);
+            box-shadow: 0 0 20px rgba(51, 255, 0, 0.2); animation: scanline 6s linear infinite; z-index: 40; pointer-events: none;
+        }
+        @keyframes scanline { 0% { top: -10%; } 100% { top: 110%; } }
+
+        /* The glass reflection */
+        .reflection {
+            position: absolute; top: -10%; left: -10%; width: 120%; height: 120%;
+            background: radial-gradient(circle at 10% 10%, rgba(255,255,255,0.1), transparent 40%);
+            border-radius: 50%; pointer-events: none; z-index: 60;
+        }
+
+        /* Screen flicker */
+        .flicker { animation: crt-flicker 0.15s infinite; }
+        @keyframes crt-flicker { 0% { opacity: 0.95; } 100% { opacity: 1; filter: brightness(1.1); } }
+
+    </style>
+</head>
+<body>
+
+    <div class="tv-frame">
+        <div class="tv-knobs">
+            <div class="knob"></div>
+            <div class="knob"></div>
+        </div>
+
+        <div class="screen-glass flicker">
+            <div class="reflection"></div>
+            <div class="scan-bar"></div>
+            
+            <div class="display">
+                <div class="channel">CH-03</div>
+                <div class="m-text">BROADCAST</div>
+                <div class="s-text">SIGNAL ACQUIRED. TRANSMITTING STRUCTURAL CSS DATA TO PHOSPHOR ARRAY.</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

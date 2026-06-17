@@ -1,0 +1,649 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #2 - Neo Brutalist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #dbfd4f; /* Neon yellow/lime */
+            --primary: #ff00ff; /* Hot pink */
+            --secondary: #00ffff; /* Cyan */
+            --black: #050505;
+            --white: #ffffff;
+            --border: 6px solid var(--black);
+            --shadow-sm: 4px 4px 0px var(--black);
+            --shadow-md: 10px 10px 0px var(--black);
+            --shadow-lg: 16px 16px 0px var(--black);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--black);
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+            width: 100vw;
+        }
+
+        ::selection {
+            background: var(--black);
+            color: var(--bg);
+        }
+
+        /* 
+          =============================================
+          CUSTOM CURSOR TRAILS
+          =============================================
+        */
+        .trail {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            border: 3px solid var(--black);
+            background: var(--primary);
+            transition: width 0.2s, height 0.2s, transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+
+        /* 
+          =============================================
+          NAVIGATION
+          =============================================
+        */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            border-bottom: var(--border);
+            height: 100px;
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            padding: 0 3rem;
+            display: flex;
+            align-items: center;
+            border-right: var(--border);
+            text-decoration: none;
+            color: var(--black);
+            background: var(--primary);
+            transition: background 0.2s;
+        }
+
+        .logo:hover {
+            background: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            flex: 1;
+        }
+
+        .nav-link {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-right: var(--border);
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--black);
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: -1;
+        }
+
+        .nav-link:hover {
+            color: var(--white);
+        }
+
+        .nav-link:hover::before {
+            transform: translateY(0);
+        }
+
+        .btn-main {
+            padding: 0 4rem;
+            background: var(--secondary);
+            font-weight: 900;
+            font-size: 1.5rem;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            outline: none;
+            transition: background 0.2s;
+        }
+
+        .btn-main:hover {
+            background: var(--primary);
+        }
+
+        /* 
+          =============================================
+          FOLD 1: HERO (THE GRID & THE SHATTER)
+          =============================================
+        */
+        .hero {
+            display: grid;
+            grid-template-columns: 2fr 1.5fr;
+            height: calc(100vh - 100px);
+            border-bottom: var(--border);
+        }
+
+        .hero-left {
+            padding: 5vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: var(--border);
+            position: relative;
+            background-color: var(--white);
+        }
+
+        .hero-title {
+            font-size: clamp(5rem, 10vw, 12rem);
+            font-weight: 900;
+            line-height: 0.85;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title span {
+            display: block;
+            -webkit-text-stroke: 3px var(--black);
+        }
+
+        .hero-title span:first-child {
+            color: var(--primary);
+            text-shadow: var(--shadow-md);
+        }
+
+        .hero-title span:last-child {
+            color: var(--white);
+            text-shadow: var(--shadow-md);
+        }
+
+        .badge {
+            position: absolute;
+            top: 5vw;
+            right: 5vw;
+            width: 150px;
+            height: 150px;
+            background: var(--secondary);
+            border: var(--border);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-weight: 900;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            box-shadow: var(--shadow-sm);
+            animation: spin 10s linear infinite;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .hero-right {
+            background-color: var(--bg);
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-right img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: var(--border);
+            box-shadow: var(--shadow-md);
+            filter: contrast(120%) saturate(150%);
+            transition: transform 0.5s ease;
+        }
+        
+        .hero-right:hover img {
+            transform: scale(0.95);
+        }
+
+        /* 
+          =============================================
+          FOLD 2: SERVICES TICKER & BLOCKS
+          =============================================
+        */
+        .ticker {
+            padding: 1.5rem 0;
+            background: var(--black);
+            color: var(--bg);
+            border-bottom: var(--border);
+            white-space: nowrap;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .ticker-text {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            animation: scrollTicker 15s linear infinite;
+        }
+
+        @keyframes scrollTicker {
+            to { transform: translateX(-50%); }
+        }
+
+        .services {
+            padding: 5vw;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            background: var(--bg);
+            border-bottom: var(--border);
+        }
+
+        .service-card {
+            background: var(--white);
+            border: var(--border);
+            padding: 3rem;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .service-card:nth-child(1) { background: var(--primary); }
+        .service-card:nth-child(2) { background: var(--secondary); }
+        .service-card:nth-child(3) { background: var(--white); }
+
+        .service-card:hover {
+            transform: translate(-10px, -10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-num {
+            font-size: 4rem;
+            font-weight: 900;
+            -webkit-text-stroke: 2px var(--black);
+            color: transparent;
+        }
+
+        .service-card h3 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            border-bottom: var(--border);
+            padding-bottom: 1rem;
+        }
+
+        /* 
+          =============================================
+          FOLD 3: MANIFESTO / BIG TEXT
+          =============================================
+        */
+        .manifesto {
+            padding: 8vw 5vw;
+            background: var(--white);
+            border-bottom: var(--border);
+            display: flex;
+            align-items: flex-end;
+            gap: 5vw;
+        }
+
+        .manifesto-text {
+            flex: 2;
+            font-size: clamp(2rem, 5vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        .manifesto-text i {
+            font-style: normal;
+            background: var(--primary);
+            color: var(--black);
+            padding: 0 10px;
+            box-shadow: var(--shadow-sm);
+            display: inline-block;
+            transform: rotate(-2deg);
+        }
+
+        .manifesto-meta {
+            flex: 1;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: var(--border);
+            padding: 2rem;
+            background: var(--bg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* 
+          =============================================
+          FOLD 4: LOUD PROJECTS
+          =============================================
+        */
+        .projects {
+            border-bottom: var(--border);
+        }
+
+        .project-row {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            border-bottom: var(--border);
+            background: var(--bg);
+            cursor: w-resize;
+        }
+
+        .project-row:last-child {
+            border-bottom: none;
+        }
+
+        .p-title {
+            padding: 3rem 5vw;
+            font-size: 6rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            border-right: var(--border);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .p-cat {
+            padding: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--white);
+            text-transform: uppercase;
+        }
+
+        .project-row:hover .p-title {
+            background: var(--black);
+            color: var(--primary);
+        }
+        
+        .project-row:hover .p-cat {
+            background: var(--primary);
+            color: var(--black);
+        }
+
+        /* 
+          =============================================
+          FOLD 5: ACCORDION FAQ
+          =============================================
+        */
+        .faq {
+            padding: 8vw 5vw;
+            background: var(--secondary);
+            border-bottom: var(--border);
+        }
+
+        .faq-title {
+            font-size: 8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 4rem;
+            -webkit-text-stroke: 3px var(--black);
+            color: var(--white);
+            text-shadow: var(--shadow-md);
+        }
+
+        .faq-item {
+            border: var(--border);
+            margin-bottom: 2rem;
+            background: var(--white);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .faq-que {
+            padding: 2rem;
+            font-size: 2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-que:hover {
+            background: var(--bg);
+        }
+
+        .icon-plus {
+            font-size: 3rem;
+            font-weight: 900;
+        }
+
+        /* 
+          =============================================
+          FOOTER
+          =============================================
+        */
+        footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 10vw 5vw 2vw 5vw;
+        }
+
+        .footer-huge {
+            font-size: clamp(6rem, 15vw, 20rem);
+            font-weight: 900;
+            line-height: 0.8;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 5rem;
+            color: var(--bg);
+            text-shadow: 10px 10px 0px var(--primary);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            border-top: 3px solid rgba(255,255,255,0.2);
+            padding-top: 2rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* 
+          =============================================
+          RESPONSIVE
+          =============================================
+        */
+        @media (max-width: 1024px) {
+            .hero { grid-template-columns: 1fr; height: auto; }
+            .hero-left { border-right: none; border-bottom: var(--border); padding: 10vw 5vw; }
+            .badge { width: 100px; height: 100px; font-size: 1rem; top: auto; bottom: -50px; right: 2rem; z-index: 10; }
+            .services { grid-template-columns: 1fr; }
+            .project-row { grid-template-columns: 1fr; }
+            .p-title { border-right: none; border-bottom: var(--border); font-size: 4rem; }
+        }
+
+        @media (max-width: 768px) {
+            nav { height: auto; flex-direction: column; }
+            .logo { padding: 1rem; border-right: none; border-bottom: var(--border); font-size: 2rem; justify-content: center;}
+            .nav-links { flex-direction: column; }
+            .nav-link { padding: 1rem; border-right: none; border-bottom: var(--border); }
+            .btn-main { padding: 1.5rem; }
+            .hero-title { font-size: 4.5rem; }
+            .manifesto { flex-direction: column; }
+            .faq-title { font-size: 4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Interactions -->
+    <script>
+        const colors = ['var(--primary)', 'var(--secondary)', 'var(--bg)', 'var(--white)'];
+        let trailCount = 0;
+        
+        window.addEventListener('mousemove', (e) => {
+            if (trailCount % 10 === 0) {
+                const trail = document.createElement('div');
+                trail.className = 'trail';
+                trail.style.left = e.pageX + 'px';
+                trail.style.top = e.pageY + 'px';
+                trail.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Random rotate
+                const rot = Math.random() * 360;
+                trail.style.transform = `translate(-50%, -50%) rotate(${rot}deg)`;
+                
+                document.body.appendChild(trail);
+                
+                setTimeout(() => {
+                    trail.style.opacity = '0';
+                    trail.style.transform = `translate(-50%, calc(-50% - 50px)) rotate(${rot}deg) scale(0)`;
+                }, 50);
+                
+                setTimeout(() => {
+                    trail.remove();
+                }, 600);
+            }
+            trailCount++;
+        });
+    </script>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <a href="#" class="logo">BRUTAL.</a>
+        <div class="nav-links">
+            <a href="#" class="nav-link">Manifesto</a>
+            <a href="#" class="nav-link">Archive</a>
+            <a href="#" class="nav-link">System</a>
+        </div>
+        <button class="btn-main">GET IN TOUCH</button>
+    </nav>
+
+    <!-- FOLD 1: HERO -->
+    <section class="hero">
+        <div class="hero-left">
+            <h1 class="hero-title">
+                <span>RADICAL</span>
+                <span>DESIGN</span>
+            </h1>
+            <div class="badge">EST. 2026</div>
+        </div>
+        <div class="hero-right">
+            <!-- Injecting AI Generated image specific to this theme -->
+            <img src="file:///C:/Users/Himanshu/.gemini/antigravity/brain/c7bee168-9405-4880-b150-9f22b2890e72/brutalist_hero_1775795398218.png" alt="Neo Brutalist Art">
+        </div>
+    </section>
+
+    <!-- FOLD 2: SERVICES MARQUEE + CARDS -->
+    <div class="ticker">
+        <div class="ticker-text">
+            NO RULES // BREAK GRIDS // BOLD COLORS // MAXIMALISM // HARD BORDERS // RAW LAYOUTS // 
+            NO RULES // BREAK GRIDS // BOLD COLORS // MAXIMALISM // HARD BORDERS // RAW LAYOUTS //
+        </div>
+    </div>
+    
+    <section class="services">
+        <div class="service-card">
+            <div class="card-num">01</div>
+            <h3>Disruptive UI</h3>
+            <p>Creating interfaces that refuse to be ignored. Loud, proud, and unapologetic interaction design.</p>
+        </div>
+        <div class="service-card">
+            <div class="card-num">02</div>
+            <h3>Brutal Code</h3>
+            <p>Web architectures stripped down to their absolute raw elements for maximum brutal efficiency.</p>
+        </div>
+        <div class="service-card">
+            <div class="card-num">03</div>
+            <h3>Grid Anarchy</h3>
+            <p>We take conventional CSS structures, break them apart, and forge them into raw structural art.</p>
+        </div>
+    </section>
+
+    <!-- FOLD 3: MANIFESTO -->
+    <section class="manifesto">
+        <div class="manifesto-text">
+            WE REJECT THE <i>BORING</i> AND THE MUNDANE. WE BELIEVE TRUE AESTHETICS COME FROM RAW, UNFILTERED DIGITAL CHAOS.
+        </div>
+        <div class="manifesto-meta">
+            <strong>MISSION:</strong><br><br>
+            To eliminate soft rounded corners from the internet permanently. Embrace the harsh edges.
+        </div>
+    </section>
+
+    <!-- FOLD 4: PROJECTS LIST -->
+    <section class="projects">
+        <div class="project-row">
+            <div class="p-title">ACID // TEST</div>
+            <div class="p-cat">WEBGL</div>
+        </div>
+        <div class="project-row">
+            <div class="p-title">NEON CRASH</div>
+            <div class="p-cat">IDENTITY</div>
+        </div>
+        <div class="project-row">
+            <div class="p-title">SYSTEM 0X</div>
+            <div class="p-cat">PLATFORM</div>
+        </div>
+    </section>
+
+    <!-- FOLD 5: FAQ ACCORDION -->
+    <section class="faq">
+        <h2 class="faq-title">ANSWERS</h2>
+        <div class="faq-item">
+            <div class="faq-que">WHY IS IT SO BRIGHT? <span class="icon-plus">+</span></div>
+        </div>
+        <div class="faq-item" style="background:var(--bg)">
+            <div class="faq-que">CAN WE MAKE IT SOFTER? <span class="icon-plus">NO.</span></div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-que">IS THIS ACCESSIBLE? <span class="icon-plus">+</span></div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-huge">CONTACT</div>
+        <div class="footer-bottom">
+            <span>© 2026 BRUTAL STUDIO</span>
+            <span>TWITTER · INSTARGRAM · GITHUB</span>
+        </div>
+    </footer>
+
+</body>
+</html>

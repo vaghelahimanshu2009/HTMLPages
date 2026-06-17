@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Design #41 - ASCII Art Terminal</title>
+    <!-- Perfect Monospace Font is essential here -->
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #000;
+            --fg: #ffffff;
+            --dim: #555555;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--fg);
+            font-family: 'VT323', monospace;
+            font-size: 1.2rem;
+            line-height: 1.2; /* Tight line height for box drawing */
+            padding: 2rem;
+            overflow-x: hidden;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 100vh;
+        }
+
+        ::selection { background: var(--fg); color: var(--bg); }
+
+        /* Prevent text wrapping breaking the art */
+        pre { white-space: pre; margin-bottom: 2rem; text-align: left; }
+        
+        .dim { color: var(--dim); }
+        .blink { animation: blink 1s step-end infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* The container holding our fake UI */
+        .ascii-gui {
+            width: 100%; max-width: 1000px;
+        }
+
+        /* Hover effect on "buttons" */
+        .btn { cursor: pointer; transition: 0.1s; display: inline-block; }
+        .btn:hover { background: var(--fg); color: var(--bg); }
+
+    </style>
+</head>
+<body>
+
+<div class="ascii-gui">
+<pre class="dim">
+  ======================================================================================
+ |                                                                                      |
+ |  SYSTEM TERMINAL V4.1                                         [ONLINE]    [SECURE]   |
+ |                                                                                      |
+  ======================================================================================
+</pre>
+
+<pre style="text-align: center;">        
+   _____                 _____ _______    _                 
+  / ____|               / ____|__   __|  | |                
+ | (___  _   _ ___ ____| (___    | | __ _| |_ _   _ ___     
+  \___ \| | | / __|______\___ \  | |/ _` | __| | | / __|    
+  ____) | |_| \__ \      ____) | | | (_| | |_| |_| \__ \    
+ |_____/ \__, |___/     |_____/  |_|\__,_|\__|\__,_|___/    
+          __/ |                                             
+         |___/                                              
+</pre>
+
+<pre>
+ +------------------------------------------------------------------------------------+
+ |                                                                                    |
+ |  [ WELCOME TO THE TEXT-ONLY DIRECTORY ]                                            |
+ |                                                                                    |
+ |  Graphics are computationally expensive. We opted directly for ASCII representation|
+ |  to ensure maximum throughput. Use your keyboard to navigate the sub-routines.     |
+ |                                                                                    |
+ +------------------------------------------------------------------------------------+
+</pre>
+
+<!-- Columns using pre-formatted text gaps -->
+<div style="display: flex; justify-content: space-between;">
+<pre>
+ +-[ SERVICES ]------------+
+ |                         |
+ |  <span class="btn">[X] ARCHITECTURE</span>     |
+ |  <span class="btn">[ ] DATA PROTOCOLS</span>   |
+ |  <span class="btn">[ ] ENCRYPTION</span>       |
+ |  <span class="btn">[ ] NETWORK OPS</span>      |
+ |                         |
+ +-------------------------+
+</pre>
+
+<pre>
+ +-[ SYSTEM STATS ]----------------------------+
+ |                                             |
+ |  CPU LOAD : ||||||||||||||||......  [62%]   |
+ |  RAM USE  : |||||||...............  [28%]   |
+ |  NET TRF  : |||||||||||||||||||||.  [91%]   |
+ |                                             |
+ |  <span class="dim">WARNING: EXTERNAL PACKET LOSS DETECTED</span>     |
+ +---------------------------------------------+
+</pre>
+</div>
+
+<pre class="dim">
+  --------------------------------------------------------------------------------------
+ | >> AWAITING USER INPUT <span class="blink">_</span>                                                              |
+  --------------------------------------------------------------------------------------
+</pre>
+
+</div>
+
+</body>
+</html>
